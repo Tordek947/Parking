@@ -4,11 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Driver</title>
 </head>
 <body>
-<jsp:useBean id="bean" scope="request" class="ua.hpopov.parking.BeanSample"/>  
-  
-<jsp:getProperty name="bean" property="name"/> 
+<jsp:useBean id="userBean" scope="request" class="ua.hpopov.parking.beans.UserBean"/> 
+<p>Hello, driver <jsp:getProperty name="userBean" property="name"/>!</p> 
 </body>
 </html>

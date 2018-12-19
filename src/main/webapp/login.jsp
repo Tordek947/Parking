@@ -24,6 +24,9 @@
 			<input type="hidden" name="command" value="LOG_IN">
 			<input type="submit" value="Log in"/>
 		</form>
+		<jsp:useBean id="msg" scope="request" class="ua.hpopov.parking.presentation.Message"/>  
+  
+		<p><jsp:getProperty name="msg" property="message"/></p>
 		<div>
 			<form action="ParkingServlet" method=post>
 				<input type="hidden" name="command" value="FORGOT_PASSWORD">

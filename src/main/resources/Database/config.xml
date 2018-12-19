@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+	<connection>
+		<uri>jdbc:mysql://127.0.0.1:3306</uri>
+	</connection>
+</database>

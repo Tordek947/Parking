@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ua.hpopov.parking.presentation.commands.Command;
+import ua.hpopov.parking.presentation.commands.CommandHelper;
+import ua.hpopov.parking.presentation.commands.CommandType;
+
 
 @SuppressWarnings("serial")
 @WebServlet("/ParkingServlet")
@@ -19,21 +23,8 @@ public class ParkingServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String command = request.getParameter("command");
-		System.out.println("Get:"+command);
-		Enumeration<String> anames = request.getParameterNames();
-		while(anames.hasMoreElements()) {
-			String name = anames.nextElement();
-			System.out.println(name+"="+request.getParameter(name));
-		}
-//		String action = request.getParameter("action");
-//		System.out.println("doGet(...)");
-//		if (action.compareTo("login") == 0) {
-//			BeanSample bean = new BeanSample();
-//			bean.setName("Petro");
-//			request.setAttribute("bean", bean);
-//			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-//		}
+		Command command = CommandHelper.getCommand(request.getParameter("command"));
+		command.execute(request, response);
 	}
 
 	
@@ -42,13 +33,8 @@ public class ParkingServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String command = request.getParameter("command");
-		System.out.println("Post"+command);
-		Enumeration<String> anames = request.getParameterNames();
-		while(anames.hasMoreElements()) {
-			String name = anames.nextElement();
-			System.out.println(name+"="+request.getParameter(name));
-		}
+		Command command = CommandHelper.getCommand(request.getParameter("command"));
+		command.execute(request, response);
 	}
 
 }

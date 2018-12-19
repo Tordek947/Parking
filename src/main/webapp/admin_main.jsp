@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Administrator</title>
 </head>
 <body>
-
+<jsp:useBean id="userBean" scope="request" class="ua.hpopov.parking.beans.UserBean"/> 
+<p>Hello, administrator <jsp:getProperty name="userBean" property="name"/>!</p> 
 </body>
 </html>

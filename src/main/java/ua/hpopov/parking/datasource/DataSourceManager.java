@@ -1,5 +1,6 @@
 package ua.hpopov.parking.datasource;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -11,9 +12,13 @@ import org.apache.commons.dbcp2.PoolableConnectionFactory;
 import org.apache.commons.dbcp2.PoolingDataSource;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DataSourceManager {
 	private static DataSource dataSourceInstance=null;
+	
+	private static final Logger log = LoggerFactory.getLogger(DataSourceManager.class);
 	
 	public static DataSource getDataSource() {
 		if (dataSourceInstance == null) {
@@ -23,6 +28,13 @@ public class DataSourceManager {
 	}
 	
 	private static DataSource loadDataSource() {
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+			log.error("",e);
+		}
 		return buildDataSource(getConnectURI(), getConnectionProperties());
 	}
 

@@ -1,14 +1,15 @@
 package ua.hpopov.parking.services;
 
-import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import ua.hpopov.parking.datasource.DataSourceManager;
+import ua.hpopov.parking.datasource.dao.DAOOperationException;
 
-public abstract class AbstractService {
+public class AbstractService {
 
-	protected DataSource dataSource;
+	private static final Logger log = LoggerFactory.getLogger(AbstractService.class);
 	
-	public AbstractService() {
-		dataSource = DataSourceManager.getDataSource();
+	protected void handleException(DAOOperationException e) {
+		log.error("",e);
 	}
 }
