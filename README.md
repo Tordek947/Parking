@@ -1,2 +1,2 @@
-# EpamParking
+# Parking
 
