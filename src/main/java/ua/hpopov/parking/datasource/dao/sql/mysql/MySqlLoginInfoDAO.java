@@ -1,4 +1,4 @@
-package ua.hpopov.parking.datasource.dao.mysql;
+package ua.hpopov.parking.datasource.dao.sql.mysql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<database name="parking" sqlName="parking">
+	<table name="assignment" sqlName="assignment">
+		<column name="driverId">driver_id</column>
+		<column name="delegatorUserId">delegator_user_id</column>
+		<column name="busId">bus_id</column>
+		<column name="routeId">route_id</column>
+		<column name="delegationTime">delegation_time</column>
+		<column name="isConfirmed">is_confirmed</column>
+	</table>
+	<table name="assignmentJournal" sqlName="assignment_journal">
+		<column name="assignmentId">assignment_id</column>
+		<column name="delegationTime">delegation_time</column>
+		<column name="confirmationTime">confirmation_time</column>
+		<column name="delegatorUserId">delegator_user_id</column>
+		<column name="assigneeDriverId">assignee_driver_id</column>
+		<column name="busId">bus_id</column>
+		<column name="routeId">route_id</column>
+	</table>
+	<table name="bus" sqlName="bus">
+		<column name="busId">bus_id</column>
+		<column name="busSerial">bus_serial</column>
+		<column name="busModel">bus_model</column>
+	</table>
+	<table name="driver" sqlName="driver">
+		<column name="driverId">driver_id</column>
+		<column name="userId">user_id</column>
+	</table>
+	<table name="loginInfo" sqlName="login_info">
+		<column name="userId">user_id</column>
+		<column name="email">email</column>
+		<column name="login">login</column>
+		<column name="password">password</column>
+		<column name="needAdminCheck">need_admin_check</column>
+	</table>
+	<table name="route" sqlName="route">
+		<column name="routeId">route_id</column>
+		<column name="routeStartVertexId">route_start_vertex_id</column>
+		<column name="routeEndVertexId">route_end_vertex_id</column>
+		<column name="routeNumber">route_number</column>
+	</table>
+	<table name="routeVertex" sqlName="route_vertex">
+		<column name="routeVertexId">route_vertex_id</column>
+		<column name="routeVertexName">route_vertex_name</column>
+	</table>
+	<table name="user" sqlName="user">
+		<column name="routeId">user_id</column>
+		<column name="routeStartVertexId">name</column>
+		<column name="routeEndVertexId">surname</column>
+		<column name="routeNumber">user_type_id</column>
+	</table>
+	<table name="userType" sqlName="user_type">
+		<column name="routeVertexId">route_vertex_id</column>
+		<column name="routeVertexName">route_vertex_name</column>
+	</table>
+</database>

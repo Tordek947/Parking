@@ -5,14 +5,13 @@
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
   <session-config>
-  	<session-timeout>20</session-timeout>
+    <session-timeout>20</session-timeout>
   </session-config>
   <login-config>
-  	<auth-method>BASIC</auth-method>
+    <auth-method>BASIC</auth-method>
   </login-config>
   <error-page>
-  	<error-code>404</error-code>
-  	<location>/error404.jsp</location>
+    <error-code>404</error-code>
+    <location>/error404.jsp</location>
   </error-page>
-
 </web-app>

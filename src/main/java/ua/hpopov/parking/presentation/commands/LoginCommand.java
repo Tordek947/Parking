@@ -52,7 +52,7 @@ public class LoginCommand extends Command{
 		if (succeed) {
 			UserBean userBean = loginResult.getUserBean();
 			request.setAttribute("userBean", userBean);
-			if (userBean.getUserTypeId() == 1) {
+			if (userBean.getUserTypeId() == 1) {//результат комманды -- страницы, на которую форвардимся из сервлета
 				request.getRequestDispatcher("/admin_main.jsp").forward(request, response);
 			} else if (userBean.getUserTypeId() == 2) {
 				request.getRequestDispatcher("/driver_main.jsp");

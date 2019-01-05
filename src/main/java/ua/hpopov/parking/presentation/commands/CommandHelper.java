@@ -9,5 +9,6 @@ public class CommandHelper {
 		default:
 			return NoActionCommand.getInstance();
 		}
+		
 	}
 }

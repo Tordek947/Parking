@@ -1,4 +1,4 @@
-package ua.hpopov.parking.datasource.dao.mysql;
+package ua.hpopov.parking.datasource.dao.sql.mysql;
 
 import ua.hpopov.parking.beans.UserTypeBean;
 import ua.hpopov.parking.datasource.dao.DAOOperationException;

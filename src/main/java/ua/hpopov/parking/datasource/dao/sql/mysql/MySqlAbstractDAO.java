@@ -1,4 +1,4 @@
-package ua.hpopov.parking.datasource.dao.mysql;
+package ua.hpopov.parking.datasource.dao.sql.mysql;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,17 +8,28 @@ import java.sql.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ua.hpopov.parking.datasource.DataSourceManager;
-import ua.hpopov.parking.datasource.dao.AbstractDAO;
+import ua.hpopov.parking.datasource.dao.Connector;
+import ua.hpopov.parking.datasource.dao.DAO;
 import ua.hpopov.parking.datasource.dao.DAOOperationException;
 import ua.hpopov.parking.datasource.dao.ParsingWork;
 import ua.hpopov.parking.datasource.dao.UpdateResult;
+import ua.hpopov.parking.datasource.dao.sql.SqlConnector;
 
-public class MySqlAbstractDAO extends AbstractDAO {
+public class MySqlAbstractDAO implements DAO {
 
-
-	private static final Logger log = LoggerFactory.getLogger(AbstractDAO.class);
+	protected SqlConnector connector;
+	private static final Logger log = LoggerFactory.getLogger(MySqlAbstractDAO.class);
 	
+
+	@Override
+	public void setConnector(Connector connector) {
+		if (connector instanceof SqlConnector) {
+			this.connector = (SqlConnector) connector;
+		} else {
+			log.error("Unable to set a connector to mysqlDAO. Using a default common connector");
+			this.connector = null;
+		}
+	}
 	
 	protected <T> T executeRetrievement(String selectQuery, ParsingWork<T> parsingWork)
 			throws DAOOperationException {
@@ -111,16 +122,14 @@ public class MySqlAbstractDAO extends AbstractDAO {
 	}
 	
 	
-	protected Connection getConnection() {
+	private Connection getConnection() {
 		if (connector != null) {
 			return connector.getConnection();
 		}
-		try {
-			return DataSourceManager.getDataSource().getConnection();
-		} catch (SQLException e) {
-			log.error("SQLException on getting connection from dbcp",e);
-			return null;
-		}
+		connector = MySqlConnectorProvider.getInstance().makeCommonConnector();
+		Connection conn = connector.getConnection();
+		connector.free();
+		return conn;
 	}
 	
 	private Statement createStatement(Connection conn) {

@@ -20,7 +20,7 @@ public class UserService extends AbstractService {
 	}
 	
 	public LoginResult login(String login, String password) {
-		LoginInfoDAO loginInfoDAO = DAOFactories.get().loginInfoDAO();
+		LoginInfoDAO loginInfoDAO = DAOFactories.getFactory().createLoginInfoDAO();
 		LoginInfoBean loginInfo;
 		try {
 			loginInfo = loginInfoDAO.getLoginInfoByLoginPassword(login, password);
@@ -35,7 +35,7 @@ public class UserService extends AbstractService {
 			return LoginResult.PROFILE_NEED_VERIFICATION;
 		}
 		
-		UserDAO userDAO = DAOFactories.get().userDAO();
+		UserDAO userDAO = DAOFactories.getFactory().createUserDAO();
 		UserBean user;
 		try {
 			user = userDAO.getUserById(loginInfo.getUserId());

@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class AssignmentBean {
 	private Integer driverId;
+	private Integer delegatorId;
 	private Integer busId;
 	private Integer routeId;
 	private Date delegationTime;
@@ -17,6 +18,14 @@ public class AssignmentBean {
 		this.driverId = driverId;
 	}
 	
+	public Integer getDelegatorId() {
+		return delegatorId;
+	}
+
+	public void setDelegatorId(Integer delegatorId) {
+		this.delegatorId = delegatorId;
+	}
+
 	public Integer getBusId() {
 		return busId;
 	}

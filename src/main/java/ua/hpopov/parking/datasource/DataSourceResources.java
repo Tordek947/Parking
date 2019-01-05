@@ -1,6 +1,5 @@
 package ua.hpopov.parking.datasource;
 
-import java.util.Properties;
 
 public class DataSourceResources {
 

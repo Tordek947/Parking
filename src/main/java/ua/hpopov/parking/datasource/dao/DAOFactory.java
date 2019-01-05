@@ -1,12 +1,14 @@
 package ua.hpopov.parking.datasource.dao;
 
 public interface DAOFactory {
-	AssignmentDAO assignmentDAO();
-	BusDAO busDAO();
-	DriverDAO driverDAO();
-	LoginInfoDAO loginInfoDAO();
-	RouteDAO routeDAO();
-	RouteVertexDAO routeVertexDAO();
-	UserDAO userDAO();
-	UserTypeDAO userTypeDAO();	
+	AssignmentDAO createAssignmentDAO();
+	BusDAO createBusDAO();
+	DriverDAO createDriverDAO();
+	LoginInfoDAO createLoginInfoDAO();
+	RouteDAO createRouteDAO();
+	RouteVertexDAO createRouteVertexDAO();
+	UserDAO createUserDAO();
+	UserTypeDAO createUserTypeDAO();
+	AssignmentJournalDAO createAssignmentJournalDAO();
+	Transaction createTransaction(TransactionWork transactionWork);
 }

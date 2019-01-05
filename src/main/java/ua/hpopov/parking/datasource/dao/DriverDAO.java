@@ -7,8 +7,11 @@ import ua.hpopov.parking.beans.DriverBean;
 public interface DriverDAO extends DAO {
 	void createDriver(DriverBean driver) throws DAOOperationException;
 	DriverBean getDriverByUserId(int userId) throws DAOOperationException;
-	List<DriverBean> getAllDrivers() throws DAOOperationException;
-	List<DriverBean> getAllFreeDrivers() throws DAOOperationException;
-	List<DriverBean> getAllBusyDrivers() throws DAOOperationException;
+	Integer getAllDriversCount() throws DAOOperationException;
+	List<DriverBean> getAllDriversPage(int fromKeyInd, int limit) throws DAOOperationException;
+	Integer getAllFreeDriversCount() throws DAOOperationException;
+	List<DriverBean> getAllFreeDriversPage(int fromKeyInd, int limit) throws DAOOperationException;
+	Integer getAllBusyDriversCount() throws DAOOperationException;
+	List<DriverBean> getAllBusyDriversPage(int fromKeyInd, int limit) throws DAOOperationException;
 	
 }

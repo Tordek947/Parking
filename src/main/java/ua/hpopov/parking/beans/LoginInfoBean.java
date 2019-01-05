@@ -2,6 +2,7 @@ package ua.hpopov.parking.beans;
 
 public class LoginInfoBean {
 	private Integer userId;
+	private String email;
 	private String login;
 	private String password;
 	private Boolean needAdminCheck;
@@ -13,6 +14,14 @@ public class LoginInfoBean {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getLogin() {

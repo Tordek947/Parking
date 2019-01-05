@@ -8,12 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class Transaction {
+public abstract class Transaction {
 
 	private static Logger log = LoggerFactory.getLogger(Transaction.class);
-	private TransactionWork transactionWork;
-	private List<DAO> transactionMemberList;
-	private TransactionConnector transactionConnector;
+	protected TransactionWork transactionWork;
+	protected List<DAO> transactionMemberList;
+	protected TransactionConnector transactionConnector;
 	
 	/**
 	 * @param transactionWork Must not use instances of DAO interface as a local field
@@ -24,7 +24,7 @@ public class Transaction {
 		defineDAOMembers();
 	}
 
-	private void defineDAOMembers() {
+	protected void defineDAOMembers() {
 		Field[] fields = transactionWork.getClass().getDeclaredFields();
 		transactionMemberList = new LinkedList<>();
 		try {
@@ -40,31 +40,6 @@ public class Transaction {
 		}
 	}
 	
-	public void execute() throws DAOOperationException {
-		boolean exceptionOccurs = false;
-		transactionConnector = new TransactionConnector();
-		for(DAO member : transactionMemberList) {
-			member.setConnector(transactionConnector);
-		}
-		try {
-			transactionWork.execute();
-		} catch (DAOOperationException e) {
-			exceptionOccurs = true;
-		} finally {
-			if (exceptionOccurs) {
-				transactionConnector.rollBack();
-			} else {
-				transactionConnector.commit();
-			}
-			transactionConnector.free();
-			for(DAO member : transactionMemberList) {
-				member.setConnector(null);
-			}
-			if (exceptionOccurs) {
-				throw new DAOOperationException();
-			}
-		}
-	}
-	
+	public abstract void execute() throws DAOOperationException;
 	
 }

@@ -1,7 +1,6 @@
 package ua.hpopov.parking.presentation;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.hpopov.parking.presentation.commands.Command;
 import ua.hpopov.parking.presentation.commands.CommandHelper;
-import ua.hpopov.parking.presentation.commands.CommandType;
 
 
 @SuppressWarnings("serial")
