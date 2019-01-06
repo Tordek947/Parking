@@ -5,7 +5,7 @@ import java.util.List;
 import ua.hpopov.parking.beans.BusBean;
 
 public interface BusDAO extends DAO {
-	void createBus(BusDAO bus) throws DAOOperationException;
+	void createBus(BusBean bus) throws DAOOperationException;
 	BusBean getBusById(int busId) throws DAOOperationException;
 	Integer getAllBusesCount() throws DAOOperationException;
 	List<BusBean> getAllBusesPage(int fromKeyInd, int limit) throws DAOOperationException;
@@ -14,6 +14,6 @@ public interface BusDAO extends DAO {
 	Integer getAllBusyBusesCount() throws DAOOperationException;
 	List<BusBean> getAllBusyBusesPage(int fromKeyInd, int limit) throws DAOOperationException;
 	UpdateResult updateBusById(BusBean bus) throws DAOOperationException;
-	void deleteBusById(int busId) throws DAOOperationException;
-	void markBusByIdAsDeleted(int busId) throws DAOOperationException;
+	UpdateResult deleteBusById(int busId) throws DAOOperationException;
+	UpdateResult markBusByIdAsDeleted(int busId) throws DAOOperationException;
 }

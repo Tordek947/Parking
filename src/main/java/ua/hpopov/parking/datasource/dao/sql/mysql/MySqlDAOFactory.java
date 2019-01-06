@@ -27,20 +27,17 @@ public class MySqlDAOFactory implements DAOFactory {
 	
 	@Override
 	public AssignmentDAO createAssignmentDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MySqlAssignmentDAO();
 	}
 
 	@Override
 	public BusDAO createBusDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MySqlBusDAO();
 	}
 
 	@Override
 	public DriverDAO createDriverDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MySqlDriverDAO();
 	}
 
 	@Override
@@ -50,14 +47,12 @@ public class MySqlDAOFactory implements DAOFactory {
 
 	@Override
 	public RouteDAO createRouteDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MySqlRouteDAO();
 	}
 
 	@Override
 	public RouteVertexDAO createRouteVertexDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MySqlRouteVertexDAO();
 	}
 
 	@Override
@@ -77,8 +72,7 @@ public class MySqlDAOFactory implements DAOFactory {
 
 	@Override
 	public AssignmentJournalDAO createAssignmentJournalDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MySqlAssignmentJournalDAO();
 	}
 
 }

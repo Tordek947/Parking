@@ -15,7 +15,7 @@ public interface AssignmentDAO extends DAO {
 	List<AssignmentFull> getUnconfirmedAssignmentsPageByDelegatorId
 		(int delegatorUserId, int fromKeyInd, int limit) throws DAOOperationException;
 	UpdateResult updateAssignmentByDriverId(AssignmentBean assignment) throws DAOOperationException;
-	Integer deleteByDriverId(int driverId) throws DAOOperationException;
-	Integer deleteByBusId(int busId) throws DAOOperationException;
+	UpdateResult deleteByDriverId(int driverId) throws DAOOperationException;
+	UpdateResult deleteByBusId(int busId) throws DAOOperationException;
 	UpdateResult deleteAssignmentsByRouteId(int routeId) throws DAOOperationException;
 }

@@ -25,23 +25,25 @@ public class MySqlAssignmentDAO extends MySqlAbstractDAO implements AssignmentDA
 		BUS_ID, ROUTE_ID, DELEGATION_TIME, IS_CONFIRMED;
 	static {
 		FULL_TABLE_NAME = "`parking`.`assignment`";
-		DRIVER_ID = "`driver_id`";
-		DELEGATOR_USER_ID = "`delegator_user_id`";
-		BUS_ID = "`bus_id`";
-		ROUTE_ID = "`route_id`";
-		DELEGATION_TIME = "`delegation_time`";
-		IS_CONFIRMED = "`is_confirmed`";
+		DRIVER_ID = "driver_id";
+		DELEGATOR_USER_ID = "delegator_user_id";
+		BUS_ID = "bus_id";
+		ROUTE_ID = "route_id";
+		DELEGATION_TIME = "delegation_time";
+		IS_CONFIRMED = "is_confirmed";
 	}
 	
 	@Override
 	public void createAssignment(AssignmentBean assignment) throws DAOOperationException {
+		String isConfirmed = (assignment.getIsConfirmed()==null? "DEFAULT":
+			(assignment.getIsConfirmed()?"1":"0"));
 		String sql = Strings.concat(
 				"INSERT INTO ",FULL_TABLE_NAME," SET\r\n",
 				DRIVER_ID,"="+assignment.getDriverId(),"\r\n",
 				DELEGATOR_USER_ID,"="+assignment.getDelegatorId(),"\r\n",
 				BUS_ID,"="+assignment.getBusId(),"\r\n",
 				ROUTE_ID,"="+assignment.getRouteId(),"\r\n",
-				IS_CONFIRMED,"="+assignment.getIsConfirmed(),";"
+				IS_CONFIRMED,"=",isConfirmed,";"
 				);
 		executeCreateOperation(sql);
 				
@@ -214,7 +216,7 @@ public class MySqlAssignmentDAO extends MySqlAbstractDAO implements AssignmentDA
 				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,";"
 				);
 		ParsingWork<List<AssignmentFull>> parsingWork = (rs)->{
-			List<AssignmentFull> result = new ArrayList<AssignmentFull>();
+			List<AssignmentFull> result = new ArrayList<>();
 			while(rs.next()) {
 				result.add(parseAssignmentFullWithoutDelegator(rs));
 			}
@@ -241,21 +243,21 @@ public class MySqlAssignmentDAO extends MySqlAbstractDAO implements AssignmentDA
 	}
 
 	@Override
-	public Integer deleteByDriverId(int driverId) throws DAOOperationException {
+	public UpdateResult deleteByDriverId(int driverId) throws DAOOperationException {
 		String sql = Strings.concat(
 				"DELETE FROM ",FULL_TABLE_NAME," WHERE\r\n",
 				DRIVER_ID,"="+driverId,";"
 				);
-		return executeUpdateOperationRetrievingKey(sql);
+		return executeUpdateOperation(sql);
 	}
 
 	@Override
-	public Integer deleteByBusId(int busId) throws DAOOperationException {
+	public UpdateResult deleteByBusId(int busId) throws DAOOperationException {
 		String sql = Strings.concat(
 				"DELETE FROM ",FULL_TABLE_NAME," WHERE\r\n",
 				BUS_ID,"="+busId,";"
 				);
-		return executeUpdateOperationRetrievingKey(sql);
+		return executeUpdateOperation(sql);
 	}
 
 	@Override

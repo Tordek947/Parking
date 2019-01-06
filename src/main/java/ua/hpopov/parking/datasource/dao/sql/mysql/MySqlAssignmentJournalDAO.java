@@ -24,13 +24,13 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 	ASSIGNEE_DRIVER_ID,	BUS_ID, ROUTE_ID;
 	static {
 		FULL_TABLE_NAME = "`parking`.`assignment_journal`";
-		ASSIGNMENT_ID = "`assignment_id`";
-		DELEGATION_TIME = "`delegation_time`";
-		CONFIRMATION_TIME = "`confirmation_time`";
-		DELEGATOR_USER_ID = "`delegator_user_id`";
-		ASSIGNEE_DRIVER_ID = "`assignee_driver_id`";
-		BUS_ID = "`bus_id`";
-		ROUTE_ID = "`route_id`";
+		ASSIGNMENT_ID = "assignment_id";
+		DELEGATION_TIME = "delegation_time";
+		CONFIRMATION_TIME = "confirmation_time";
+		DELEGATOR_USER_ID = "delegator_user_id";
+		ASSIGNEE_DRIVER_ID = "assignee_driver_id";
+		BUS_ID = "bus_id";
+		ROUTE_ID = "route_id";
 	}
 	
 	@Override
@@ -71,9 +71,9 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 			throws DAOOperationException {
 		String sql = Strings.concat(
 				"SELECT `assignment`.*,`user`.*, `bus`.*, `route`.*,\r\n",
-				"`d_user`.",MySqlUserDAO.USER_ID," AS `d_user_id`, `d_user`.",MySqlUserDAO.NAME," AS `d_name`,\r\n",
-				"`d_user`.",MySqlUserDAO.SURNAME," AS `d_surname`,\r\n",
-				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS `d_user_type_id` FROM (\r\n",
+				"`d_user`.",MySqlUserDAO.USER_ID," AS 'd_user_id', `d_user`.",MySqlUserDAO.NAME," AS 'd_name',\r\n",
+				"`d_user`.",MySqlUserDAO.SURNAME," AS 'd_surname',\r\n",
+				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS 'd_user_type_id' FROM (\r\n",
 				"SELECT * FROM ",FULL_TABLE_NAME," WHERE\r\n",
 				DELEGATOR_USER_ID,"="+delegatorUserId," AND ",ASSIGNMENT_ID,">="+fromKeyInd,"\r\n",
 				"LIMIT "+limit,") AS `assignment`\r\n",
@@ -127,10 +127,10 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 
 	private UserBean parseDelegatorUserBean(ResultSet rs) throws SQLException {
 		UserBean result = new UserBean();
-		result.setName(rs.getString("`d_name`"));
-		result.setSurname(rs.getString("`d_surname`"));
-		result.setUserId(rs.getInt("`d_user_id`"));
-		result.setUserTypeId(rs.getInt("`d_user_type_id`"));
+		result.setName(rs.getString("d_name"));
+		result.setSurname(rs.getString("d_surname"));
+		result.setUserId(rs.getInt("d_user_id"));
+		result.setUserTypeId(rs.getInt("d_user_type_id"));
 		return result;
 	}
 
@@ -189,9 +189,9 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 			throws DAOOperationException {
 		String sql = Strings.concat(
 				"SELECT `assignment`.*,`user`.*, `bus`.*, `route`.*,\r\n",
-				"`d_user`.",MySqlUserDAO.USER_ID," AS `d_user_id`, `d_user`.",MySqlUserDAO.NAME," AS `d_name`,\r\n",
-				"`d_user`.",MySqlUserDAO.SURNAME," AS `d_surname`,\r\n",
-				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS `d_user_type_id` FROM (\r\n",
+				"`d_user`.",MySqlUserDAO.USER_ID," AS 'd_user_id', `d_user`.",MySqlUserDAO.NAME," AS 'd_name',\r\n",
+				"`d_user`.",MySqlUserDAO.SURNAME," AS 'd_surname',\r\n",
+				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS 'd_user_type_id' FROM (\r\n",
 				"SELECT * FROM ",FULL_TABLE_NAME," WHERE\r\n",
 				ASSIGNEE_DRIVER_ID,"="+assigneeDriverId," AND ",ASSIGNMENT_ID,">="+fromKeyInd,"\r\n",
 				"LIMIT "+limit,") AS `assignment`\r\n",
@@ -236,9 +236,9 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 			throws DAOOperationException {
 		String sql = Strings.concat(
 				"SELECT `assignment`.*,`user`.*, `bus`.*, `route`.*,\r\n",
-				"`d_user`.",MySqlUserDAO.USER_ID," AS `d_user_id`, `d_user`.",MySqlUserDAO.NAME," AS `d_name`,\r\n",
-				"`d_user`.",MySqlUserDAO.SURNAME," AS `d_surname`,\r\n",
-				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS `d_user_type_id` FROM (\r\n",
+				"`d_user`.",MySqlUserDAO.USER_ID," AS 'd_user_id', `d_user`.",MySqlUserDAO.NAME," AS 'd_name',\r\n",
+				"`d_user`.",MySqlUserDAO.SURNAME," AS 'd_surname',\r\n",
+				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS 'd_user_type_id' FROM (\r\n",
 				"SELECT * FROM ",FULL_TABLE_NAME," WHERE\r\n",
 				BUS_ID,"="+busId," AND ",ASSIGNMENT_ID,">="+fromKeyInd,"\r\n",
 				"LIMIT "+limit,") AS `assignment`\r\n",
@@ -283,9 +283,9 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 			throws DAOOperationException {
 		String sql = Strings.concat(
 				"SELECT `assignment`.*,`user`.*, `bus`.*, `route`.*,\r\n",
-				"`d_user`.",MySqlUserDAO.USER_ID," AS `d_user_id`, `d_user`.",MySqlUserDAO.NAME," AS `d_name`,\r\n",
-				"`d_user`.",MySqlUserDAO.SURNAME," AS `d_surname`,\r\n",
-				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS `d_user_type_id` FROM (\r\n",
+				"`d_user`.",MySqlUserDAO.USER_ID," AS 'd_user_id', `d_user`.",MySqlUserDAO.NAME," AS 'd_name',\r\n",
+				"`d_user`.",MySqlUserDAO.SURNAME," AS 'd_surname',\r\n",
+				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS 'd_user_type_id' FROM (\r\n",
 				"SELECT * FROM ",FULL_TABLE_NAME," WHERE\r\n",
 				ROUTE_ID,"="+routeId," AND ",ASSIGNMENT_ID,">="+fromKeyInd,"\r\n",
 				"LIMIT "+limit,") AS `assignment`\r\n",

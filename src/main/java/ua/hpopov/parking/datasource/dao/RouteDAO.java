@@ -15,6 +15,6 @@ public interface RouteDAO {
 	Integer getAllBusyRoutesCount() throws DAOOperationException;
 	List<RouteFull> getAllBusyRoutesPage(int fromKeyInd, int limit) throws DAOOperationException;
 	UpdateResult updateRoute(RouteBean route) throws DAOOperationException;
-	void deleteRouteById(int routeId) throws DAOOperationException;
-	void markRouteAsDeletedById(int routeId) throws DAOOperationException;
+	UpdateResult deleteRouteById(int routeId) throws DAOOperationException;
+	UpdateResult markRouteAsDeletedById(int routeId) throws DAOOperationException;
 }
