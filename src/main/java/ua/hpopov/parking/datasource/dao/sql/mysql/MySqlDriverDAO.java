@@ -45,4 +45,22 @@ public class MySqlDriverDAO extends MySqlAbstractDAO implements DriverDAO {
 		return null;
 	}
 
+	@Override
+	public Integer getAllDriversCount() throws DAOOperationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getAllFreeDriversCount() throws DAOOperationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getAllBusyDriversCount() throws DAOOperationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
