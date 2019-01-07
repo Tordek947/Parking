@@ -6,9 +6,15 @@ public class CommandHelper {
 		switch(commandType) {
 		case LOG_IN:
 			return LoginCommand.getInstance();
-		default:
-			return NoActionCommand.getInstance();
+		case FORWARD_TO_LOGIN:
+			return ForwardToLoginCommand.getInstance();
+		case NO_ACTION:
+			break;
+		case REGISTER:
+			return RegisterCommand.getInstance();
+		case FORWARD_TO_REGISTRATION:
+			return ForwardToRegistrationCommand.getInstance();
 		}
-		
+		return NoActionCommand.getInstance();
 	}
 }

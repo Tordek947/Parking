@@ -19,8 +19,8 @@ public class NoActionCommand extends Command {
 	}
 	
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		return CommandResult.STAY;
 	}
 
 }

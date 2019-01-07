@@ -23,7 +23,9 @@ public class MySqlAbstractDAO implements DAO {
 
 	@Override
 	public void setConnector(Connector connector) {
-		if (connector instanceof SqlConnector) {
+		if (connector == null) {
+			this.connector = null;
+		} else if (connector instanceof SqlConnector) {
 			this.connector = (SqlConnector) connector;
 		} else {
 			log.error("Unable to set a connector to mysqlDAO. Using a default common connector");

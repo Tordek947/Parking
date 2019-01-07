@@ -28,17 +28,17 @@ public class MySqlUserDAO extends MySqlAbstractDAO implements UserDAO {
 		String name = user.getName();
 		String surname = user.getSurname();
 		Integer userTypeId = user.getUserTypeId();
-		String sql = "INSERT INTO parking.user SET\r\n" + 
-				"	`name`='"+name+"',\r\n" + 
-				"    `surname`='"+surname+"',\r\n" + 
-				"    `user_type_id`='"+userTypeId+"';";
+		String sql = Strings.concat("INSERT INTO ",FULL_TABLE_NAME," SET\r\n",
+				"	`",NAME,"`='",name,"',\r\n" + 
+				"    `",SURNAME,"`='",surname,"',\r\n" + 
+				"    `",USER_TYPE_ID,"`='"+userTypeId,"';");
 		executeCreateOperation(sql);
 	}
 
 	@Override
 	public UserBean getUserById(int userId) throws DAOOperationException {
-		String sql = "SELECT user.* FROM parking.user AS user\r\n" + 
-				"WHERE  user.user_id='"+userId+"'";
+		String sql = Strings.concat("SELECT user.* FROM ",FULL_TABLE_NAME," AS user\r\n",
+				"WHERE  user.",USER_ID,"='"+userId,"';");
 		ParsingWork<UserBean> work = (rs)->{
 			UserBean userBean = null;
 			if (rs.next()) {
@@ -62,9 +62,9 @@ public class MySqlUserDAO extends MySqlAbstractDAO implements UserDAO {
 	public UpdateResult updateUserById(UserBean user) throws DAOOperationException {
 		String sql = Strings.concat(
 				"UPDATE ",FULL_TABLE_NAME," SET\r\n",
-				NAME,"='"+user.getName(),"'\r\n",
-				SURNAME,"='",user.getSurname(),"'\r\n",
-				USER_TYPE_ID,"="+user.getUserTypeId(),"\r\n",
+				NAME,"='"+user.getName(),"',\r\n",
+				SURNAME,"='",user.getSurname(),"',\r\n",
+				USER_TYPE_ID,"="+user.getUserTypeId(),",\r\n",
 				"WHERE ",USER_ID,"="+user.getUserId(),";"
 				);
 		return executeUpdateOperation(sql);
@@ -141,6 +141,21 @@ public class MySqlUserDAO extends MySqlAbstractDAO implements UserDAO {
 			return null;
 		};
 		return executeRetrievement(sql, parsingWork);
+	}
+
+	@Override
+	public UserBean getUserByNameSurname(String name, String surname) throws DAOOperationException {
+		String sql = Strings.concat("SELECT user.* FROM ",FULL_TABLE_NAME," AS user\r\n",
+				"WHERE  user.",NAME,"='"+name,"' AND\r\n",
+				"user.",SURNAME,"='",surname,"';");
+		ParsingWork<UserBean> work = (rs)->{
+			UserBean userBean = null;
+			if (rs.next()) {
+				userBean = parseUserBean(rs);
+			}
+			return userBean;
+		};	
+		return executeRetrievement(sql, work);
 	}
 
 }

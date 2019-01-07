@@ -5,9 +5,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ua.hpopov.parking.beans.UserBean;
-import ua.hpopov.parking.presentation.Message;
 import ua.hpopov.parking.services.LoginResult;
 import ua.hpopov.parking.services.UserService;
 
@@ -24,43 +24,46 @@ public class LoginCommand extends Command{
 	}
 	
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
+	public CommandResult execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String login = request.getParameter("login");
+		String loginOrEmail = request.getParameter("loginOrEmail");
 		String password = request.getParameter("password");
-		LoginResult loginResult = UserService.getInstance().login(login, password);
-		Message message = new Message();
+		LoginResult loginResult = UserService.getInstance().login(loginOrEmail, password);
+		String message=null;
+		HttpSession session = request.getSession();
 		boolean succeed = false;
 		switch(loginResult) {
 		case ERROR:
-			message.setMessage("A server error occurs while logging in");
+			message = "A server error occurs while logging in";
 			break;
 		case NO_SUCH_USER:
-			message.setMessage("Erroneous verification data: either login and/or password");
+			message = "There is no user with such verification data";
 			break;
 		case PROFILE_NEED_VERIFICATION:
-			message.setMessage("This profile need administrator verification");
+			message = "This profile need administrator verification";
 			break;
 		case SUCCESSFUL:
-			message.setMessage("Successfully");
+			message = null;
 			succeed = true;
 			break;
-		default:
+		case INVALID_DATA:
+			message = "Erroneous verification data: either login/email and/or password";
 			break;
 		}
-		request.setAttribute("msg", message);
+		session.setAttribute("loginMessage", message);
+		CommandResult result = CommandResult.FORWARD;
 		if (succeed) {
 			UserBean userBean = loginResult.getUserBean();
 			request.setAttribute("userBean", userBean);
 			if (userBean.getUserTypeId() == 1) {//результат комманды -- страницы, на которую форвардимся из сервлета
-				request.getRequestDispatcher("/admin_main.jsp").forward(request, response);
+				result.setArgument(Page.ADMIN_MAIN.getPath());
 			} else if (userBean.getUserTypeId() == 2) {
-				request.getRequestDispatcher("/driver_main.jsp");
+				result.setArgument(Page.DRIVER_MAIN.getPath());
 			}
 		} else {
-			request.getRequestDispatcher("/login.jsp").forward(request, response);
+			result.setArgument(Page.LOG_IN.getPath());
 		}
-		
+		return result;
 	}
 
 }

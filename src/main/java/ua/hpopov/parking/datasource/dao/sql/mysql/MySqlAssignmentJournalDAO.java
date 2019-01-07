@@ -41,11 +41,11 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 			new Timestamp(assignment.getConfirmationTime().getTime()).toString();
 		String sql = Strings.concat(
 				"INSERT INTO ",FULL_TABLE_NAME," SET\r\n",
-				DELEGATION_TIME,"=",delegationTime,"\r\n",
-				CONFIRMATION_TIME,"=",confirmationTime,"\r\n",
-				DELEGATOR_USER_ID,"="+assignment.getDelegatorUserId(),"\r\n",
-				ASSIGNEE_DRIVER_ID,"="+assignment.getAssigneeDriverId(),"\r\n",
-				BUS_ID,"="+assignment.getBusId(),"\r\n",
+				DELEGATION_TIME,"=",delegationTime,",\r\n",
+				CONFIRMATION_TIME,"=",confirmationTime,",\r\n",
+				DELEGATOR_USER_ID,"="+assignment.getDelegatorUserId(),",\r\n",
+				ASSIGNEE_DRIVER_ID,"="+assignment.getAssigneeDriverId(),",\r\n",
+				BUS_ID,"="+assignment.getBusId(),",\r\n",
 				ROUTE_ID,"="+assignment.getRouteId(),";"
 				);
 		executeCreateOperation(sql);

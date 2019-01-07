@@ -28,10 +28,10 @@ public class MySqlLoginInfoDAO extends MySqlAbstractDAO implements LoginInfoDAO 
 			(loginInfo.getNeedAdminCheck()?"1":"0"));
 		String sql = Strings.concat(
 				"INSERT INTO ",FULL_TABLE_NAME," SET\r\n",
-				USER_ID,"="+loginInfo.getUserId(),"\r\n",
-				EMAIL,"='"+loginInfo.getEmail(),"'\r\n",
-				LOGIN,"='"+loginInfo.getLogin(),"'\r\n",
-				PASSWORD,"='"+loginInfo.getPassword(),"'\r\n",
+				USER_ID,"="+loginInfo.getUserId(),",\r\n",
+				EMAIL,"='"+loginInfo.getEmail(),"',\r\n",
+				LOGIN,"='"+loginInfo.getLogin(),"',\r\n",
+				PASSWORD,"='"+loginInfo.getPassword(),"',\r\n",
 				NEED_ADMIN_CHECK,"="+needAdminCheck,";"
 				);
 		executeCreateOperation(sql);
@@ -56,9 +56,9 @@ public class MySqlLoginInfoDAO extends MySqlAbstractDAO implements LoginInfoDAO 
 	public UpdateResult updateLoginInfoByUserId(LoginInfoBean loginInfo) throws DAOOperationException {
 		String sql = Strings.concat(
 				"UPDATE ",FULL_TABLE_NAME," SET\r\n",
-				EMAIL,"='"+loginInfo.getEmail(),"'\r\n",
-				LOGIN,"='"+loginInfo.getLogin(),"'\r\n",
-				PASSWORD,"='"+loginInfo.getPassword(),"'\r\n",
+				EMAIL,"='"+loginInfo.getEmail(),"',\r\n",
+				LOGIN,"='"+loginInfo.getLogin(),"',\r\n",
+				PASSWORD,"='"+loginInfo.getPassword(),"',\r\n",
 				NEED_ADMIN_CHECK,"=",(loginInfo.getNeedAdminCheck()?"1":"0"),
 				"WHERE ",USER_ID,"="+loginInfo.getUserId(),";"
 				);
@@ -66,11 +66,17 @@ public class MySqlLoginInfoDAO extends MySqlAbstractDAO implements LoginInfoDAO 
 	}
 
 	@Override
-	public LoginInfoBean getLoginInfoByLoginPassword(String login, String password)
+	public LoginInfoBean getLoginInfoByLoginOrEmailPassword(String loginOrEmail, String password)
 			throws DAOOperationException {
+		String part;
+		if (loginOrEmail.contains("@")) {
+			part = EMAIL;
+		} else {
+			part = LOGIN;
+		}
 		String sql = Strings.concat(
 				"SELECT `login_info`.* FROM",FULL_TABLE_NAME," AS `login_info`\r\n",
-				"WHERE `login_info`.",LOGIN,"='"+login+"' AND login_info.",PASSWORD,"='"+password+"';"
+				"WHERE `login_info`.",part,"='",loginOrEmail,"' AND login_info.",PASSWORD,"='"+password+"';"
 				);
 		ParsingWork<LoginInfoBean> work = (rs)->{
 			LoginInfoBean loginInfoBean = null;

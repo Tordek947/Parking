@@ -15,8 +15,11 @@ private static Logger log = LoggerFactory.getLogger(SqlTransactionConnector.clas
 	private Connection connection;
 	
 	public SqlTransactionConnector(Connection connection) {
+		
+		this.connection = connection;
+		
 		try {
-			connection.setAutoCommit(false);
+			this.connection.setAutoCommit(false);
 		} catch (SQLException e) {
 			log.error("Error on setting autoCommit false", e);
 		}

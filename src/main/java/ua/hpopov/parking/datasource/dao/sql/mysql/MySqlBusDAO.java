@@ -25,7 +25,7 @@ public class MySqlBusDAO extends MySqlAbstractDAO implements BusDAO {
 	public void createBus(BusBean bus) throws DAOOperationException {
 		String sql = Strings.concat(
 				"INSERT INTO ",FULL_TABLE_NAME," SET\r\n",
-				BUS_SERIAL,"="+bus.getBusSerial(),"\r\n",
+				BUS_SERIAL,"="+bus.getBusSerial(),",\r\n",
 				BUS_MODEL,"='"+bus.getBusModel(),"';"
 				);
 		executeCreateOperation(sql);
@@ -116,8 +116,8 @@ public class MySqlBusDAO extends MySqlAbstractDAO implements BusDAO {
 	public UpdateResult updateBusById(BusBean bus) throws DAOOperationException {
 		String sql = Strings.concat(
 				"UPDATE ",FULL_TABLE_NAME," SET\r\n",
-				BUS_SERIAL,"="+bus.getBusSerial(),"\r\n",
-				BUS_MODEL,"='",bus.getBusModel(),"'\r\n",
+				BUS_SERIAL,"="+bus.getBusSerial(),",\r\n",
+				BUS_MODEL,"='",bus.getBusModel(),"',\r\n",
 				"WHERE ",BUS_ID,"="+bus.getBusId(),";"
 				);
 		return executeUpdateOperation(sql);

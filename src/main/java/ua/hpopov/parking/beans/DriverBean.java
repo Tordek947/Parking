@@ -3,7 +3,7 @@ package ua.hpopov.parking.beans;
 public class DriverBean {
 	private Integer driverId;
 	private Integer userId;
-	
+
 	public Integer getDriverId() {
 		return driverId;
 	}

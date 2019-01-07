@@ -39,10 +39,10 @@ public class MySqlAssignmentDAO extends MySqlAbstractDAO implements AssignmentDA
 			(assignment.getIsConfirmed()?"1":"0"));
 		String sql = Strings.concat(
 				"INSERT INTO ",FULL_TABLE_NAME," SET\r\n",
-				DRIVER_ID,"="+assignment.getDriverId(),"\r\n",
-				DELEGATOR_USER_ID,"="+assignment.getDelegatorId(),"\r\n",
-				BUS_ID,"="+assignment.getBusId(),"\r\n",
-				ROUTE_ID,"="+assignment.getRouteId(),"\r\n",
+				DRIVER_ID,"="+assignment.getDriverId(),",\r\n",
+				DELEGATOR_USER_ID,"="+assignment.getDelegatorId(),",\r\n",
+				BUS_ID,"="+assignment.getBusId(),",\r\n",
+				ROUTE_ID,"="+assignment.getRouteId(),",\r\n",
 				IS_CONFIRMED,"=",isConfirmed,";"
 				);
 		executeCreateOperation(sql);
@@ -231,11 +231,11 @@ public class MySqlAssignmentDAO extends MySqlAbstractDAO implements AssignmentDA
 		boolean isConfirmed = assignment.getIsConfirmed();
 		String sql = Strings.concat(
 				"UPDATE ",FULL_TABLE_NAME," SET\r\n",
-				DELEGATOR_USER_ID,"="+assignment.getDelegatorId(),"\r\n",
-				BUS_ID,"="+assignment.getBusId(),"\r\n",
-				ROUTE_ID,"="+assignment.getRouteId(),"\r\n",
+				DELEGATOR_USER_ID,"="+assignment.getDelegatorId(),",\r\n",
+				BUS_ID,"="+assignment.getBusId(),",\r\n",
+				ROUTE_ID,"="+assignment.getRouteId(),",\r\n",
 				DELEGATION_TIME,"=",
-				delegationTime==null? "=NOW()\r\n": new Timestamp(delegationTime.getTime()).toString(),"\r\n",
+				delegationTime==null? "=NOW()\r\n": new Timestamp(delegationTime.getTime()).toString(),",\r\n",
 				IS_CONFIRMED,"="+ (isConfirmed?1:0),
 				"WHERE ",DRIVER_ID,"="+assignment.getDriverId(),";"
 				);

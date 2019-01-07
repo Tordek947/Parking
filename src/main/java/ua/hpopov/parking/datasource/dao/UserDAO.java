@@ -7,6 +7,7 @@ import ua.hpopov.parking.beans.UserBean;
 public interface UserDAO extends DAO {
 	void createUser(UserBean user) throws DAOOperationException;
 	UserBean getUserById(int userId) throws DAOOperationException;
+	UserBean getUserByNameSurname(String name, String surname) throws DAOOperationException;
 	Integer getAllUsersCount() throws DAOOperationException;
 	List<UserBean> getAllUsersPage(int fromKeyInd, int limit) throws DAOOperationException;
 	Integer getAllUsersByUserTypeCount(int userTypeId) throws DAOOperationException;

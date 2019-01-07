@@ -9,6 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public abstract class Command 
 {
-	public abstract void execute(HttpServletRequest request , HttpServletResponse response)
+	public abstract CommandResult execute(HttpServletRequest request , HttpServletResponse response)
 			throws ServletException, IOException;
 }

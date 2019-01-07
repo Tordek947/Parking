@@ -29,8 +29,8 @@ public class MySqlRouteDAO extends MySqlAbstractDAO implements RouteDAO {
 	public void createRoute(RouteBean route) throws DAOOperationException {
 		String sql = Strings.concat(
 				"INSERT INTO ",FULL_TABLE_NAME," SET\r\n",
-				ROUTE_START_VERTEX_ID,"="+route.getRouteStartVertexId(),"\r\n",
-				ROUTE_END_VERTEX_ID,"="+route.getRouteEndVertexId(),"\r\n",
+				ROUTE_START_VERTEX_ID,"="+route.getRouteStartVertexId(),",\r\n",
+				ROUTE_END_VERTEX_ID,"="+route.getRouteEndVertexId(),",\r\n",
 				ROUTE_NUMBER,"="+route.getRouteNumber(),";"
 				);
 		executeCreateOperation(sql);
@@ -163,9 +163,9 @@ public class MySqlRouteDAO extends MySqlAbstractDAO implements RouteDAO {
 	public UpdateResult updateRoute(RouteBean route) throws DAOOperationException {
 		String sql = Strings.concat(
 				"UPDATE ",FULL_TABLE_NAME," SET\r\n",
-				ROUTE_START_VERTEX_ID,"="+route.getRouteStartVertexId(),"\r\n",
-				ROUTE_END_VERTEX_ID,"="+route.getRouteEndVertexId(),"\r\n",
-				ROUTE_NUMBER,"="+route.getRouteNumber(),"\r\n",
+				ROUTE_START_VERTEX_ID,"="+route.getRouteStartVertexId(),",\r\n",
+				ROUTE_END_VERTEX_ID,"="+route.getRouteEndVertexId(),",\r\n",
+				ROUTE_NUMBER,"="+route.getRouteNumber(),",\r\n",
 				"WHERE ",ROUTE_ID,"="+route.getRouteId(),";"
 				);
 		return executeUpdateOperation(sql);
