@@ -12,6 +12,7 @@
     <title>Administrator</title>
 	<!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="css/styles.css" rel="stylesheet">
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script><!--1.12.4-->
@@ -21,23 +22,28 @@
 	
 </head>
 <body>
+<c:if test="${loginnedUserBean == null}">
+	<jsp:forward page="<%=Page.LOG_IN.getPath() %>"></jsp:forward>
+</c:if>
 <div class="container-fluid">
     	<header class = "row">
 			<div class = "logo_holder col-md-offset-1 col-md-2">
 				<mytag:refmain><img src = "data/images/logo.png" alt = "MyParking"/></mytag:refmain>
 			</div>
-			<div class="col-md-offset-4 col-md-2">
-				<button class="btn btn-secondary btn-block">Register</button>
+			<div class="dropdown col-md-offset-3 col-md-1">
+  				<button class="btn btn-default events dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    				<i class="fa fa-bell" aria-hidden="true"></i>
+    				<!-- <span class="caret"></span>-->
+  				</button>
+  				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    				<mytag:events count="10"/>
+  				</ul>
 			</div>
+			<p class="col-md-2 textCenter">
+				<mytag:greeting/>
+			</p>
 			<div class = "main_button col-md-2">
-			<c:choose>
-    			<c:when test="${loginnedUserBean != null}">
-					<button class="btn btn-primary btn-block" onclick="logOut()">Log out</button>
-    			</c:when>    
-    			<c:otherwise>
-        			<jsp:forward page="<%=Page.LOG_IN.getPath() %>"></jsp:forward>
-   				</c:otherwise>
-			</c:choose>
+				<button class="btn btn-primary btn-block" onclick="logOut()">Log out</button>
 			</div>
 		</header>
 		<div hidden>

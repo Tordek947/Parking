@@ -85,7 +85,7 @@ form input[type="text"], form input[type="password"]{
 	align-items: center;
 }
 
-.formRow p{
+.formRow p, Header p{
 	margin-bottom:0;
 }
 
@@ -107,4 +107,12 @@ form input[type="text"], form input[type="password"]{
 .formButtonGroup{
 	display:flex;
 	justify-content: space-between;
+}
+
+
+/*========================================ADMIN_MAIN==================================================== */
+
+.events{
+	border-radius: 100px;
+	padding:5px;
 }

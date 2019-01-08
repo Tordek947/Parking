@@ -7,10 +7,14 @@ import ua.hpopov.parking.beans.AssignmentJournalFull;
 
 public interface AssignmentJournalDAO extends DAO {
 	void create(AssignmentJournalBean assignment) throws DAOOperationException;
-	
+
+	List<AssignmentJournalFull> getConfirmedAssignmentsByDelegatorIdSortedByConfirmation
+	(int delegatorUserId, int limit) throws DAOOperationException;
 	Integer getAssignmentsByDelegatorIdCount(int delegatorUserId) throws DAOOperationException;
 	List<AssignmentJournalFull> getAssignmentsPageByDelegatorId
 	(int delegatorUserId, int fromKeyInd, int limit) throws DAOOperationException;
+	List<AssignmentJournalFull> getAssignmentsByAssigneeIdSortedByDelegation
+	(int assigneeDriverId, int limit) throws DAOOperationException;
 	Integer getAssignmentsPageByAssigneeIdCount(int assigneeDriverId) throws DAOOperationException;
 	List<AssignmentJournalFull> getAssignmentsPageByAssigneeId
 	(int assigneeDriverId, int fromKeyInd, int limit) throws DAOOperationException;

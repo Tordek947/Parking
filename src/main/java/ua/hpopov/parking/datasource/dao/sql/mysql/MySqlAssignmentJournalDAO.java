@@ -20,15 +20,18 @@ import ua.hpopov.parking.datasource.dao.ParsingWork;
 
 public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements AssignmentJournalDAO {
 
-	static final String FULL_TABLE_NAME, ASSIGNMENT_ID, DELEGATION_TIME, CONFIRMATION_TIME, DELEGATOR_USER_ID,
-	ASSIGNEE_DRIVER_ID,	BUS_ID, ROUTE_ID;
+	static final String FULL_TABLE_NAME, ASSIGNMENT_ID, DELEGATION_TIME, CONFIRMATION_TIME,
+	DELEGATOR_USER_ID, HAS_DELEGATOR_SEEN, ASSIGNEE_DRIVER_ID, HAS_ASSIGNEE_SEEN,
+	BUS_ID, ROUTE_ID;
 	static {
 		FULL_TABLE_NAME = "`parking`.`assignment_journal`";
 		ASSIGNMENT_ID = "assignment_id";
 		DELEGATION_TIME = "delegation_time";
 		CONFIRMATION_TIME = "confirmation_time";
 		DELEGATOR_USER_ID = "delegator_user_id";
+		HAS_DELEGATOR_SEEN = "has_delegator_seen";
 		ASSIGNEE_DRIVER_ID = "assignee_driver_id";
+		HAS_ASSIGNEE_SEEN = "has_assignee_seen";
 		BUS_ID = "bus_id";
 		ROUTE_ID = "route_id";
 	}
@@ -39,12 +42,18 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 				new Timestamp(assignment.getDelegationTime().getTime()).toString();
 		String confirmationTime = (assignment.getConfirmationTime()==null)?"NULL":
 			new Timestamp(assignment.getConfirmationTime().getTime()).toString();
+		String hasDelegatorSeen = ((assignment.getHasDelegatorSeen()==null)? "DEFAULT":
+			(assignment.getHasDelegatorSeen()==true?"1":"0"));
+		String hasAssigneeSeen = ((assignment.getHasAssigneeSeen()==null)? "DEFAULT":
+			(assignment.getHasAssigneeSeen()==true?"1":"0"));
 		String sql = Strings.concat(
 				"INSERT INTO ",FULL_TABLE_NAME," SET\r\n",
 				DELEGATION_TIME,"=",delegationTime,",\r\n",
 				CONFIRMATION_TIME,"=",confirmationTime,",\r\n",
 				DELEGATOR_USER_ID,"="+assignment.getDelegatorUserId(),",\r\n",
+				HAS_DELEGATOR_SEEN,"="+hasDelegatorSeen,",\r\n",
 				ASSIGNEE_DRIVER_ID,"="+assignment.getAssigneeDriverId(),",\r\n",
+				HAS_ASSIGNEE_SEEN,"="+hasAssigneeSeen,",\r\n",
 				BUS_ID,"="+assignment.getBusId(),",\r\n",
 				ROUTE_ID,"="+assignment.getRouteId(),";"
 				);
@@ -87,7 +96,7 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 				"ON `assignment`.",MySqlBusDAO.BUS_ID,"=","`bus`.",MySqlBusDAO.BUS_ID,"\r\n",
 				"INNER JOIN ",MySqlRouteDAO.FULL_TABLE_NAME," AS `route`\r\n",
 				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,"\r\n",
-				"ORDER BY `assignment`.`assignment_id` DESC;"
+				"ORDER BY `assignment`.`",ASSIGNMENT_ID,"` DESC;"
 				);
 		ParsingWork<List<AssignmentJournalFull>> parsingWork = (rs)->{
 			List<AssignmentJournalFull> result = new ArrayList<>();
@@ -105,7 +114,9 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 		Date delegationTime = parseDate(rs,DELEGATION_TIME);
 		Date confirmationTime = parseDate(rs,CONFIRMATION_TIME);
 		UserBean delegatorUserBean = parseDelegatorUserBean(rs);
+		Boolean hasDelegatorSeen = rs.getBoolean(HAS_DELEGATOR_SEEN);
 		DriverFull assigneeDriverFull = parseDriverFull(rs);
+		Boolean hasAssigneeSeen = rs.getBoolean(HAS_ASSIGNEE_SEEN);
 		BusBean busBean = parseBusBean(rs);
 		RouteBean routeBean = parseRouteBean(rs);
 		result.setAssigneeDriverFull(assigneeDriverFull);
@@ -114,6 +125,8 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 		result.setConfirmationTime(confirmationTime);
 		result.setDelegationTime(delegationTime);
 		result.setDelegatorUserBean(delegatorUserBean);
+		result.setHasAssigneeSeen(hasAssigneeSeen);
+		result.setHasDelegatorSeen(hasDelegatorSeen);
 		result.setRouteBean(routeBean);
 		return result;
 	}
@@ -190,7 +203,8 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 			throws DAOOperationException {
 		String sql = Strings.concat(
 				"SELECT `assignment`.*,`user`.*, `bus`.*, `route`.*,\r\n",
-				"`d_user`.",MySqlUserDAO.USER_ID," AS 'd_user_id', `d_user`.",MySqlUserDAO.NAME," AS 'd_name',\r\n",
+				"`d_user`.",MySqlUserDAO.USER_ID," AS 'd_user_id',\r\n",
+				"`d_user`.",MySqlUserDAO.NAME," AS 'd_name',\r\n",
 				"`d_user`.",MySqlUserDAO.SURNAME," AS 'd_surname',\r\n",
 				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS 'd_user_type_id' FROM (\r\n",
 				"SELECT * FROM ",FULL_TABLE_NAME," WHERE\r\n",
@@ -206,7 +220,7 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 				"ON `assignment`.",MySqlBusDAO.BUS_ID,"=","`bus`.",MySqlBusDAO.BUS_ID,"\r\n",
 				"INNER JOIN ",MySqlRouteDAO.FULL_TABLE_NAME," AS `route`\r\n",
 				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,"\r\n",
-				"ORDER BY `assignment`.`assignment_id` DESC;"
+				"ORDER BY `assignment`.`",ASSIGNMENT_ID,"` DESC;"
 				);
 		ParsingWork<List<AssignmentJournalFull>> parsingWork = (rs)->{
 			List<AssignmentJournalFull> result = new ArrayList<>();
@@ -238,7 +252,8 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 			throws DAOOperationException {
 		String sql = Strings.concat(
 				"SELECT `assignment`.*,`user`.*, `bus`.*, `route`.*,\r\n",
-				"`d_user`.",MySqlUserDAO.USER_ID," AS 'd_user_id', `d_user`.",MySqlUserDAO.NAME," AS 'd_name',\r\n",
+				"`d_user`.",MySqlUserDAO.USER_ID," AS 'd_user_id',\r\n",
+				"`d_user`.",MySqlUserDAO.NAME," AS 'd_name',\r\n",
 				"`d_user`.",MySqlUserDAO.SURNAME," AS 'd_surname',\r\n",
 				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS 'd_user_type_id' FROM (\r\n",
 				"SELECT * FROM ",FULL_TABLE_NAME," WHERE\r\n",
@@ -254,7 +269,7 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 				"ON `assignment`.",MySqlBusDAO.BUS_ID,"=","`bus`.",MySqlBusDAO.BUS_ID,"\r\n",
 				"INNER JOIN ",MySqlRouteDAO.FULL_TABLE_NAME," AS `route`\r\n",
 				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,"\r\n",
-				"ORDER BY `assignment`.`assignment_id` DESC;"
+				"ORDER BY `assignment`.`",ASSIGNMENT_ID,"` DESC;"
 				);
 		ParsingWork<List<AssignmentJournalFull>> parsingWork = (rs)->{
 			List<AssignmentJournalFull> result = new ArrayList<>();
@@ -302,7 +317,76 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 				"ON `assignment`.",MySqlBusDAO.BUS_ID,"=","`bus`.",MySqlBusDAO.BUS_ID,"\r\n",
 				"INNER JOIN ",MySqlRouteDAO.FULL_TABLE_NAME," AS `route`\r\n",
 				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,"\r\n",
-				"ORDER BY `assignment`.`assignment_id` DESC;"
+				"ORDER BY `assignment`.`",ASSIGNMENT_ID,"` DESC;"
+				);
+		ParsingWork<List<AssignmentJournalFull>> parsingWork = (rs)->{
+			List<AssignmentJournalFull> result = new ArrayList<>();
+			while(rs.next()) {
+				result.add(parseAssignmentJournalFull(rs));
+			}
+			return result;
+		};
+		return executeRetrievement(sql, parsingWork);
+	}
+
+	@Override
+	public List<AssignmentJournalFull> getConfirmedAssignmentsByDelegatorIdSortedByConfirmation
+			(int delegatorUserId, int limit) throws DAOOperationException {
+		String sql = Strings.concat(
+				"SELECT `assignment`.*,`user`.*, `bus`.*, `route`.*,\r\n",
+				"`d_user`.",MySqlUserDAO.USER_ID," AS 'd_user_id',\r\n",
+				"`d_user`.",MySqlUserDAO.NAME," AS 'd_name',\r\n",
+				"`d_user`.",MySqlUserDAO.SURNAME," AS 'd_surname',\r\n",
+				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS 'd_user_type_id' FROM (\r\n",
+				"SELECT * FROM ",FULL_TABLE_NAME," WHERE\r\n",
+				DELEGATOR_USER_ID,"="+delegatorUserId," AND ",CONFIRMATION_TIME," IS NOT NULL\r\n",
+				"ORDER BY `",CONFIRMATION_TIME,"` DESC\r\n",
+				"LIMIT "+limit,") AS `assignment`\r\n",
+				"INNER JOIN ",MySqlDriverDAO.FULL_TABLE_NAME," AS `driver`\r\n",
+				"ON `driver`.",MySqlDriverDAO.DRIVER_ID,"=`assignment`.",ASSIGNEE_DRIVER_ID,"\r\n",
+				"INNER JOIN ",MySqlUserDAO.FULL_TABLE_NAME," AS `user`\r\n",
+				"ON `driver`.",MySqlDriverDAO.USER_ID,"=","`user`.",MySqlDriverDAO.USER_ID,"\r\n",
+				"INNER JOIN ",MySqlUserDAO.FULL_TABLE_NAME," AS `d_user`\r\n",
+				"ON `assignment`.",DELEGATOR_USER_ID,"=","`d_user`.",MySqlDriverDAO.USER_ID,"\r\n",
+				"INNER JOIN ",MySqlBusDAO.FULL_TABLE_NAME," AS `bus`\r\n",
+				"ON `assignment`.",MySqlBusDAO.BUS_ID,"=","`bus`.",MySqlBusDAO.BUS_ID,"\r\n",
+				"INNER JOIN ",MySqlRouteDAO.FULL_TABLE_NAME," AS `route`\r\n",
+				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,";"
+				);
+		ParsingWork<List<AssignmentJournalFull>> parsingWork = (rs)->{
+			List<AssignmentJournalFull> result = new ArrayList<>();
+			while(rs.next()) {
+				result.add(parseAssignmentJournalFull(rs));
+			}
+			return result;
+		};
+		return executeRetrievement(sql, parsingWork);
+	}
+
+	@Override
+	public List<AssignmentJournalFull> getAssignmentsByAssigneeIdSortedByDelegation
+			(int assigneeDriverId, int limit) throws DAOOperationException {
+		String sql = Strings.concat(
+				"SELECT `assignment`.*,`user`.*, `bus`.*, `route`.*,\r\n",
+				"`d_user`.",MySqlUserDAO.USER_ID," AS 'd_user_id',\r\n",
+				"`d_user`.",MySqlUserDAO.NAME," AS 'd_name',\r\n",
+				"`d_user`.",MySqlUserDAO.SURNAME," AS 'd_surname',\r\n",
+				"`d_user`.",MySqlUserDAO.USER_TYPE_ID," AS 'd_user_type_id' FROM (\r\n",
+				"SELECT * FROM ",FULL_TABLE_NAME," WHERE\r\n",
+				ASSIGNEE_DRIVER_ID,"="+assigneeDriverId,"\r\n",
+				"ORDER BY ",DELEGATION_TIME," DESC\r\n",
+				") LIMIT "+limit," AS `assignment`\r\n",
+				"INNER JOIN ",MySqlDriverDAO.FULL_TABLE_NAME," AS `driver`\r\n",
+				"ON `driver`.",MySqlDriverDAO.DRIVER_ID,"=`assignment`.",ASSIGNEE_DRIVER_ID,"\r\n",
+				"INNER JOIN ",MySqlUserDAO.FULL_TABLE_NAME," AS `user`\r\n",
+				"ON `driver`.",MySqlDriverDAO.USER_ID,"=","`user`.",MySqlDriverDAO.USER_ID,"\r\n",
+				"INNER JOIN ",MySqlUserDAO.FULL_TABLE_NAME," AS `d_user`\r\n",
+				"ON `assignment`.",DELEGATOR_USER_ID,"=","`d_user`.",MySqlDriverDAO.USER_ID,"\r\n",
+				"INNER JOIN ",MySqlBusDAO.FULL_TABLE_NAME," AS `bus`\r\n",
+				"ON `assignment`.",MySqlBusDAO.BUS_ID,"=","`bus`.",MySqlBusDAO.BUS_ID,"\r\n",
+				"INNER JOIN ",MySqlRouteDAO.FULL_TABLE_NAME," AS `route`\r\n",
+				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,"\r\n",
+				"ORDER BY `assignment`.`",ASSIGNMENT_ID,"` DESC;"
 				);
 		ParsingWork<List<AssignmentJournalFull>> parsingWork = (rs)->{
 			List<AssignmentJournalFull> result = new ArrayList<>();

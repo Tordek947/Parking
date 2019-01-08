@@ -8,7 +8,9 @@ public class AssignmentJournalBean {
 	private Date delegationTime;
 	private Date confirmationTime;
 	private Integer delegatorUserId;
+	private Boolean hasDelegatorSeen;
 	private Integer assigneeDriverId;
+	private Boolean hasAssigneeSeen;
 	private Integer busId;
 	private Integer routeId;
 	
@@ -44,6 +46,14 @@ public class AssignmentJournalBean {
 		this.delegatorUserId = delegatorUserId;
 	}
 	
+	public Boolean getHasDelegatorSeen() {
+		return hasDelegatorSeen;
+	}
+
+	public void setHasDelegatorSeen(Boolean hasDelegatorSeen) {
+		this.hasDelegatorSeen = hasDelegatorSeen;
+	}
+
 	public Integer getAssigneeDriverId() {
 		return assigneeDriverId;
 	}
@@ -52,6 +62,14 @@ public class AssignmentJournalBean {
 		this.assigneeDriverId = assigneeDriverId;
 	}
 	
+	public Boolean getHasAssigneeSeen() {
+		return hasAssigneeSeen;
+	}
+
+	public void setHasAssigneeSeen(Boolean hasAssigneeSeen) {
+		this.hasAssigneeSeen = hasAssigneeSeen;
+	}
+
 	public Integer getBusId() {
 		return busId;
 	}

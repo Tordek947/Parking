@@ -7,7 +7,9 @@ public class AssignmentJournalFull {
 	private Date delegationTime;
 	private Date confirmationTime;
 	private UserBean delegatorUserBean;
+	private Boolean hasDelegatorSeen;
 	private DriverFull assigneeDriverFull;
+	private Boolean hasAssigneeSeen;
 	private BusBean busBean;
 	private RouteBean routeBean;
 	
@@ -43,6 +45,14 @@ public class AssignmentJournalFull {
 		this.delegatorUserBean = delegatorUserBean;
 	}
 	
+	public Boolean getHasDelegatorSeen() {
+		return hasDelegatorSeen;
+	}
+
+	public void setHasDelegatorSeen(Boolean hasDelegatorSeen) {
+		this.hasDelegatorSeen = hasDelegatorSeen;
+	}
+
 	public DriverFull getAssigneeDriverFull() {
 		return assigneeDriverFull;
 	}
@@ -51,6 +61,14 @@ public class AssignmentJournalFull {
 		this.assigneeDriverFull = assigneeDriverFull;
 	}
 	
+	public Boolean getHasAssigneeSeen() {
+		return hasAssigneeSeen;
+	}
+
+	public void setHasAssigneeSeen(Boolean hasAssigneeSeen) {
+		this.hasAssigneeSeen = hasAssigneeSeen;
+	}
+
 	public BusBean getBusBean() {
 		return busBean;
 	}
