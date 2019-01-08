@@ -18,4 +18,8 @@ public enum Page {
 		return path;
 	}
 	
+	public String getName() {
+		return path.substring(1);
+	}
+	
 }

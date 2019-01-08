@@ -32,15 +32,6 @@
 		<div hidden>
 			<a href="login.jsp" id="toLogin"></a>
 			<a href="registration.jsp" id="toRegister"></a>
-			
-				<!--  <form id="toLogin" action="ParkingServlet" method=post accept-charset=utf-8>
-					<input type="hidden" name="command" value="FORWARD_TO_LOGIN">
-					<input type="submit"/>
-				</form>
-				<form id="toRegister" action="ParkingServlet" method=post accept-charset=utf-8>
-					<input type="hidden" name="command" value="FORWARD_TO_REGISTRATION">
-					<input type="submit"/>
-				</form> -->
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">

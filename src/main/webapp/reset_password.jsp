@@ -42,7 +42,7 @@
     				<c:otherwise>
         				<jsp:forward page="/error.jsp"></jsp:forward>
    					</c:otherwise>
-				</c:choose>
+			</c:choose>
 			<div class="row formRow">
 				<p class="col-md-offset-2 col-md-4">Your email: </p>
 				<c:choose>

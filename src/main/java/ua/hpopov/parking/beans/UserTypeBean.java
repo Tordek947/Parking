@@ -18,6 +18,14 @@ public class UserTypeBean {
 		return userType;
 	}
 	
+	public static UserTypeBean fromUserTypeId(int userTypeId) {
+		switch(userTypeId) {
+			case 1: return admin();
+			case 2: return driver();
+			default: return null;
+		}
+	}
+	
 	public Integer getUserTypeId() {
 		return userTypeId;
 	}
@@ -34,5 +42,18 @@ public class UserTypeBean {
 		this.userTypeValue = userTypeValue;
 	}
 	
+	public boolean isDriver() {
+		if(userTypeId == 2 && userTypeValue.equals("DRIVER")) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isAdministrator() {
+		if(userTypeId == 1 && userTypeValue.equals("ADMINISTRATOR")) {
+			return true;
+		}
+		return false;
+	}
 	
 }

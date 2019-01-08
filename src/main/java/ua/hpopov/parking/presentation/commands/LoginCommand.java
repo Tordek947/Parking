@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import ua.hpopov.parking.beans.UserBean;
+import ua.hpopov.parking.beans.UserTypeBean;
 import ua.hpopov.parking.services.LoginResult;
 import ua.hpopov.parking.services.UserService;
 
@@ -52,11 +53,15 @@ public final class LoginCommand extends Command{
 		CommandResult result = CommandResult.FORWARD;
 		if (succeed) {
 			UserBean userBean = loginResult.getUserBean();
-			request.setAttribute("userBean", userBean);
-			if (userBean.getUserTypeId() == 1) {//результат комманды -- страницы, на которую форвардимся из сервлета
+			UserTypeBean userType =  UserTypeBean.fromUserTypeId(userBean.getUserTypeId());
+			session.setAttribute("loginnedUserBean", userBean);
+			if (userType.isAdministrator()) {//результат комманды -- страницы, на которую форвардимся из сервлета
 				result.setArgument(Page.ADMIN_MAIN.getPath());
-			} else if (userBean.getUserTypeId() == 2) {
+			} else if (userType.isDriver()) {
 				result.setArgument(Page.DRIVER_MAIN.getPath());
+			} else {
+				session.setAttribute("loginMessage", "A server error occurs while logging in");
+				result.setArgument(Page.LOG_IN.getPath());
 			}
 		} else {
 			result.setArgument(Page.LOG_IN.getPath());

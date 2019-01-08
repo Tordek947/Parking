@@ -86,7 +86,8 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 				"INNER JOIN ",MySqlBusDAO.FULL_TABLE_NAME," AS `bus`\r\n",
 				"ON `assignment`.",MySqlBusDAO.BUS_ID,"=","`bus`.",MySqlBusDAO.BUS_ID,"\r\n",
 				"INNER JOIN ",MySqlRouteDAO.FULL_TABLE_NAME," AS `route`\r\n",
-				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,";"
+				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,"\r\n",
+				"ORDER BY `assignment`.`assignment_id` DESC;"
 				);
 		ParsingWork<List<AssignmentJournalFull>> parsingWork = (rs)->{
 			List<AssignmentJournalFull> result = new ArrayList<>();
@@ -204,7 +205,8 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 				"INNER JOIN ",MySqlBusDAO.FULL_TABLE_NAME," AS `bus`\r\n",
 				"ON `assignment`.",MySqlBusDAO.BUS_ID,"=","`bus`.",MySqlBusDAO.BUS_ID,"\r\n",
 				"INNER JOIN ",MySqlRouteDAO.FULL_TABLE_NAME," AS `route`\r\n",
-				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,";"
+				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,"\r\n",
+				"ORDER BY `assignment`.`assignment_id` DESC;"
 				);
 		ParsingWork<List<AssignmentJournalFull>> parsingWork = (rs)->{
 			List<AssignmentJournalFull> result = new ArrayList<>();
@@ -251,7 +253,8 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 				"INNER JOIN ",MySqlBusDAO.FULL_TABLE_NAME," AS `bus`\r\n",
 				"ON `assignment`.",MySqlBusDAO.BUS_ID,"=","`bus`.",MySqlBusDAO.BUS_ID,"\r\n",
 				"INNER JOIN ",MySqlRouteDAO.FULL_TABLE_NAME," AS `route`\r\n",
-				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,";"
+				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,"\r\n",
+				"ORDER BY `assignment`.`assignment_id` DESC;"
 				);
 		ParsingWork<List<AssignmentJournalFull>> parsingWork = (rs)->{
 			List<AssignmentJournalFull> result = new ArrayList<>();
@@ -298,7 +301,8 @@ public class MySqlAssignmentJournalDAO extends MySqlAbstractDAO implements Assig
 				"INNER JOIN ",MySqlBusDAO.FULL_TABLE_NAME," AS `bus`\r\n",
 				"ON `assignment`.",MySqlBusDAO.BUS_ID,"=","`bus`.",MySqlBusDAO.BUS_ID,"\r\n",
 				"INNER JOIN ",MySqlRouteDAO.FULL_TABLE_NAME," AS `route`\r\n",
-				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,";"
+				"ON `assignment`.",MySqlRouteDAO.ROUTE_ID,"=","`route`.",MySqlRouteDAO.ROUTE_ID,"\r\n",
+				"ORDER BY `assignment`.`assignment_id` DESC;"
 				);
 		ParsingWork<List<AssignmentJournalFull>> parsingWork = (rs)->{
 			List<AssignmentJournalFull> result = new ArrayList<>();
