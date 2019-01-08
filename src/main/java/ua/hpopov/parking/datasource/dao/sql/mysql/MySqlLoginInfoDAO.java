@@ -59,7 +59,7 @@ public class MySqlLoginInfoDAO extends MySqlAbstractDAO implements LoginInfoDAO 
 				EMAIL,"='"+loginInfo.getEmail(),"',\r\n",
 				LOGIN,"='"+loginInfo.getLogin(),"',\r\n",
 				PASSWORD,"='"+loginInfo.getPassword(),"',\r\n",
-				NEED_ADMIN_CHECK,"=",(loginInfo.getNeedAdminCheck()?"1":"0"),
+				NEED_ADMIN_CHECK,"=",(loginInfo.getNeedAdminCheck()?"1":"0"),"\r\n",
 				"WHERE ",USER_ID,"="+loginInfo.getUserId(),";"
 				);
 		return executeUpdateOperation(sql);
@@ -92,9 +92,25 @@ public class MySqlLoginInfoDAO extends MySqlAbstractDAO implements LoginInfoDAO 
 		LoginInfoBean result = new LoginInfoBean();
 		result.setUserId(rs.getInt(USER_ID));
 		result.setLogin(rs.getString(LOGIN));
+		result.setEmail(rs.getString(EMAIL));
 		result.setPassword(rs.getString(PASSWORD));
 		result.setNeedAdminCheck(rs.getBoolean(NEED_ADMIN_CHECK));
 		return result;
+	}
+
+	@Override
+	public LoginInfoBean getLoginInfoByEmail(String email) throws DAOOperationException {
+		String sql = Strings.concat(
+				"SELECT * FROM ",FULL_TABLE_NAME,"\r\n",
+				"WHERE ",EMAIL,"='"+email,"';"
+				);
+		ParsingWork<LoginInfoBean> parsingWork = (rs)->{
+			if (rs.next()) {
+				return parseLoginInfoBean(rs);
+			}
+			return null;
+		};
+		return executeRetrievement(sql, parsingWork);
 	}
 
 }

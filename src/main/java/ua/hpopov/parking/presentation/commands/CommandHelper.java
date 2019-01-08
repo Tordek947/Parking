@@ -14,6 +14,10 @@ public class CommandHelper {
 			return RegisterCommand.getInstance();
 		case FORWARD_TO_REGISTRATION:
 			return ForwardToRegistrationCommand.getInstance();
+		case RESTORE_PASSWORD:
+			return RestorePasswordCommand.getInstance();
+		case RESET_PASSWORD:
+			return ResetPasswordCommand.getInstance();
 		}
 		return NoActionCommand.getInstance();
 	}

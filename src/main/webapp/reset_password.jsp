@@ -6,7 +6,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Log in</title>
+    <title>Reset password</title>
 	<!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
@@ -15,7 +15,6 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/unloginnedHeader.js"></script>
-    <script src="js/login.js"></script>
 	
 <body>
 	<div class="container-fluid">
@@ -33,29 +32,48 @@
 		<div hidden>
 			<a href="login.jsp" id="toLogin"></a>
 			<a href="registration.jsp" id="toRegister"></a>
-			<a href="forgot_password.jsp" id="toForgotPassword"></a>
 		</div>
 		<form id="login" class="col-md-offset-3 col-md-6" action="ParkingServlet" method=post>
-			<p class="textCenter textHeader">Log in to Parking System</p>
+			<p class="textCenter textHeader">Setting a new password</p>
+			<c:choose>
+    				<c:when test="${resetPasswordHeaderMessage != null}">
+        				<p class="textCenter"><%= session.getAttribute("resetPasswordHeaderMessage") %></p>
+    				</c:when>    
+    				<c:otherwise>
+        				<jsp:forward page="/error.jsp"></jsp:forward>
+   					</c:otherwise>
+				</c:choose>
 			<div class="row formRow">
-				<p class="col-md-offset-2 col-md-4">Login or email<span class=red>*</span>: </p>
-				<input class="col-md-4" type="text" name="loginOrEmail"/>
+				<p class="col-md-offset-2 col-md-4">Your email: </p>
+				<c:choose>
+    				<c:when test="${email != null}">
+        				<p class="col-md-4"><%= session.getAttribute("email") %></p>
+    				</c:when>    
+    				<c:otherwise>
+        				<jsp:forward page="/error.jsp"></jsp:forward>
+   					</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="row formRow">
-				<p class="col-md-offset-2 col-md-4">Password<span class=red>*</span>: </p>
+				<p class="col-md-offset-2 col-md-4">Verification code<span class=red>*</span>: </p>
+				<input class="col-md-4" type="text" name="verificationCode"/>
+			</div>
+			<div class="row formRow">
+				<p class="col-md-offset-2 col-md-4">New password<span class=red>*</span>: </p>
 				<input class="col-md-4" type="password" name="password"/>
 			</div>
+			<div class="row formRow">
+				<p class="col-md-offset-2 col-md-4">Repeat password<span class=red>*</span>: </p>
+				<input class="col-md-4" type="password" name="repeatPassword"/>
+			</div>
 			<p class="textCenter"><span class="red">*</span> fields are neccessary to fill</p>
-			<c:if test="${loginMessage != null}">
+			<c:if test="${resetPasswordMessage != null}">
 				<div class="serverMsg">
-  					<p><%= session.getAttribute("loginMessage") %></p>
+  					<p><%= session.getAttribute("resetPasswordMessage") %></p>
   				</div>
   			</c:if>
-			<input type="hidden" name="command" value="LOG_IN">
-			<div class="formRow formButtonGroup">
-				<input class="btn btn-secondary formButton" type="button" onclick="toForgotPassword()" value="Forgot password?"/>
-				<input class="btn btn-primary formButton" type="submit" value="Log in"/>
-			</div>
+			<input type="hidden" name="command" value="RESET_PASSWORD">
+			<input class="btn btn-primary formButton right" type="submit" value="Reset password"/>
 		</form>
 	</div>
 </body>

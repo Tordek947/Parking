@@ -12,7 +12,7 @@ import ua.hpopov.parking.beans.UserBean;
 import ua.hpopov.parking.services.RegistrationResult;
 import ua.hpopov.parking.services.UserService;
 
-public class RegisterCommand extends Command {
+public final class RegisterCommand extends Command {
 
 	private static RegisterCommand instance=null;
 	private RegisterCommand() {
@@ -37,7 +37,8 @@ public class RegisterCommand extends Command {
 		loginInfoBean.setEmail(request.getParameter("email"));
 		loginInfoBean.setLogin(request.getParameter("login"));
 		loginInfoBean.setPassword(request.getParameter("password"));
-		RegistrationResult registrationResult = UserService.getInstance().register(userBean, loginInfoBean);
+		String repeatPassword = request.getParameter("repeatPassword");
+		RegistrationResult registrationResult = UserService.getInstance().register(userBean, loginInfoBean, repeatPassword);
 		HttpSession session = request.getSession();
 		CommandResult result = CommandResult.FORWARD;
 		result.setArgument(Page.REGISTRATION.getPath());
@@ -55,8 +56,8 @@ public class RegisterCommand extends Command {
 			session.setAttribute("registrationMessage", "The password field is invalid");
 			break;
 		case SUCCESSFUL:
-			session.setAttribute("lastRegisteredEmail", registrationResult.getEmail());
-			session.setAttribute("registrationMessage", null);
+			request.setAttribute("lastRegisteredEmail", registrationResult.getEmail());
+			clearSessionVariables(session);
 			result.setArgument(Page.REGISTRATION_SUCCESSFUL.getPath());
 			break;
 		case UNUNIQUE_LOGIN_OR_EMAIL:
@@ -68,8 +69,16 @@ public class RegisterCommand extends Command {
 		case INVALID_LOGIN:
 			session.setAttribute("registrationMessage", "The login field is invalid");
 			break;
+		case PASSWORDS_DIFFERS:
+			session.setAttribute("registrationMessage", "Passwords do not match");
+			break;
 		}
 		return result;
+	}
+
+	@Override
+	protected void clearSessionVariables(HttpSession session) {
+		session.removeAttribute("registrationMessage");
 	}
 
 }

@@ -7,5 +7,6 @@ public interface LoginInfoDAO extends DAO {
 	LoginInfoBean getLoginInfoByUserId(int userId) throws DAOOperationException;
 	LoginInfoBean getLoginInfoByLoginOrEmailPassword(String loginOrEmail, String password)
 			throws DAOOperationException;
+	LoginInfoBean getLoginInfoByEmail(String email) throws DAOOperationException;
 	UpdateResult updateLoginInfoByUserId(LoginInfoBean loginInfo) throws DAOOperationException;
 }

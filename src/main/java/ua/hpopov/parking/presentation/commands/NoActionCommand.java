@@ -5,8 +5,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class NoActionCommand extends Command {
+public final class NoActionCommand extends Command {
 
 	private static  NoActionCommand instance=null;
 	private NoActionCommand() {}
@@ -20,7 +21,14 @@ public class NoActionCommand extends Command {
 	
 	@Override
 	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		return CommandResult.STAY;
+		CommandResult result = CommandResult.STAY;
+		result.setArgument(Page.ERROR.getPath());
+		return result;
+	}
+
+	@Override
+	protected void clearSessionVariables(HttpSession session) {
+		
 	}
 
 }

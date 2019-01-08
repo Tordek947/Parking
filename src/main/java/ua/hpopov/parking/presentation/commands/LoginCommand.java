@@ -11,7 +11,7 @@ import ua.hpopov.parking.beans.UserBean;
 import ua.hpopov.parking.services.LoginResult;
 import ua.hpopov.parking.services.UserService;
 
-public class LoginCommand extends Command{
+public final class LoginCommand extends Command{
 
 	private static LoginCommand instance=null;
 	private LoginCommand() {}
@@ -29,28 +29,26 @@ public class LoginCommand extends Command{
 		String loginOrEmail = request.getParameter("loginOrEmail");
 		String password = request.getParameter("password");
 		LoginResult loginResult = UserService.getInstance().login(loginOrEmail, password);
-		String message=null;
 		HttpSession session = request.getSession();
 		boolean succeed = false;
 		switch(loginResult) {
 		case ERROR:
-			message = "A server error occurs while logging in";
+			session.setAttribute("loginMessage", "A server error occurs while logging in");
 			break;
 		case NO_SUCH_USER:
-			message = "There is no user with such verification data";
+			session.setAttribute("loginMessage", "There is no user with such verification data");
 			break;
 		case PROFILE_NEED_VERIFICATION:
-			message = "This profile need administrator verification";
+			session.setAttribute("loginMessage", "This profile need administrator verification");
 			break;
 		case SUCCESSFUL:
-			message = null;
+			clearSessionVariables(session);
 			succeed = true;
 			break;
 		case INVALID_DATA:
-			message = "Erroneous verification data: either login/email and/or password";
+			session.setAttribute("loginMessage", "Erroneous verification data: either login/email and/or password");
 			break;
 		}
-		session.setAttribute("loginMessage", message);
 		CommandResult result = CommandResult.FORWARD;
 		if (succeed) {
 			UserBean userBean = loginResult.getUserBean();
@@ -64,6 +62,11 @@ public class LoginCommand extends Command{
 			result.setArgument(Page.LOG_IN.getPath());
 		}
 		return result;
+	}
+
+	@Override
+	protected void clearSessionVariables(HttpSession session) {
+		session.removeAttribute("loginMessage");
 	}
 
 }

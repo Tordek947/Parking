@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>MyParking</title>
+    <title>Restore password</title>
 	<!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
@@ -15,10 +16,9 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/unloginnedHeader.js"></script>
 	
-</head>
 <body>
-    <div class="container-fluid">
-    	<header class = "row">
+	<div class="container-fluid">
+		<header class = "row">
 			<div class = "logo_holder col-md-offset-1 col-md-2">
 				<a href = "index.jsp"><img src = "data/images/logo.png" alt = "MyParking"/></a>
 			</div>
@@ -32,37 +32,22 @@
 		<div hidden>
 			<a href="login.jsp" id="toLogin"></a>
 			<a href="registration.jsp" id="toRegister"></a>
-			
-				<!--  <form id="toLogin" action="ParkingServlet" method=post accept-charset=utf-8>
-					<input type="hidden" name="command" value="FORWARD_TO_LOGIN">
-					<input type="submit"/>
-				</form>
-				<form id="toRegister" action="ParkingServlet" method=post accept-charset=utf-8>
-					<input type="hidden" name="command" value="FORWARD_TO_REGISTRATION">
-					<input type="submit"/>
-				</form> -->
 		</div>
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-			<div class="row welcome">
-				<h2 class="col-md textCenter">Welcome to MyParking system!</h2>
+		<form id="login" class="col-md-offset-3 col-md-6" action="ParkingServlet" method=post>
+			<p class="textCenter formHeader">Restore password</p>
+			<div class="row formRow">
+				<p class="col-md-offset-1 col-md-5">Registered google email<span class=red>*</span>: </p>
+				<input class="col-md-5" type="text" name="email"/>
 			</div>
-			<div class="row">
-				<div class="col-md-offset-4 col-md-4">
-					<button class="btn btn-primary btn-lg btn-block" onclick="toLogIn()">Log in</button>
-				</div>
-			</div>
-			<div class="row notMember">
-				<p class="col-md textCenter">You are not a member?</p>
-			</div>
-			<div class="row">
-				<div class="col-md-offset-4 col-md-4">
-					<button class="btn btn-secondary btn-lg btn-block" onclick="toRegister()">Register</button>
-				</div>
-			</div>
-			</div>
-		</div>
-    </div>
-	
+			<p class="textCenter"><span class="red">*</span> fields are neccessary to fill</p>
+			<c:if test="${restorePasswordMessage != null}">
+				<div class="serverMsg">
+  					<p><%= session.getAttribute("restorePasswordMessage") %></p>
+  				</div>
+  			</c:if>
+			<input type="hidden" name="command" value="RESTORE_PASSWORD">
+			<input class="btn btn-primary formButton right" type="submit" value="Restore password"/>
+		</form>
+	</div>
 </body>
 </html>

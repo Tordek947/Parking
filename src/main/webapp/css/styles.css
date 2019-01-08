@@ -1,0 +1,110 @@
+@charset "UTF-8";
+
+Body{
+	font-size: 14pt;
+}
+
+Header{
+	display:flex;
+	/*background-color: #4c445b;*/
+	align-items: center;
+	margin-bottom:20px;
+	border: 1px solid #cccccc;
+	padding:5px;
+}
+.logo_holder{
+	display:flex;
+	align-items: center;
+	height:75px;/*Header_height-5*/
+}
+.logo_holder *{
+	height:100%;
+}
+
+.btn {
+	font-size: 14pt;
+}
+
+.btn-secondary:hover {
+    color: #000;
+    background-color: #ccccff;
+}
+
+.textCenter{
+	text-align:center;
+}
+
+.welcome{
+	padding: 80px 0px 40px 0px;
+}
+.welcome *{
+	font-size: 30pt;
+}
+.notMember{
+	padding: 40px 0px 0px 0px;
+}
+.notMember *{
+	font-size: 16pt;
+}
+
+/* ==================================REGISTRATION==================================== */
+.red{
+	color:red;
+}
+.serverMsg{
+	padding: 8px;
+	border: 1px solid red;
+	border-radius: 4px;
+	background-color: #ffcccc;
+}
+.serverMsg *{
+	color: #000;
+    text-align: center;
+    margin: 0px;
+}
+form{
+	border: 2px solid #cccccc;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 10px;
+}
+
+form input[type="text"], form input[type="password"]{
+	height: 30px;
+}
+
+.textHeader{
+	font-size: 18pt;
+	padding: 10px;
+}
+
+.formRow{
+	padding-top:5px;
+	padding-bottom:5px;
+	display: flex;
+	align-items: center;
+}
+
+.formRow p{
+	margin-bottom:0;
+}
+
+.right{
+	float:right;
+}
+
+.formButton{
+	margin:20px;
+}
+/*=======================================THANK FOR REGISTRATION==============================*/
+
+.textMessage{
+	padding: 5px 0px 10px 0px;
+}
+
+/* ====================================LOGIN============================================ */
+
+.formButtonGroup{
+	display:flex;
+	justify-content: space-between;
+}

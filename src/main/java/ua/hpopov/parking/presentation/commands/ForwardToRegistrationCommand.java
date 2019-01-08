@@ -5,8 +5,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ForwardToRegistrationCommand extends Command {
+public final class ForwardToRegistrationCommand extends Command {
 
 	private static ForwardToRegistrationCommand instance=null;
 	private ForwardToRegistrationCommand() {
@@ -26,6 +27,11 @@ public class ForwardToRegistrationCommand extends Command {
 		CommandResult result = CommandResult.FORWARD;
 		result.setArgument(Page.REGISTRATION.getPath());
 		return result;
+	}
+
+	@Override
+	protected void clearSessionVariables(HttpSession session) {
+		
 	}
 
 }

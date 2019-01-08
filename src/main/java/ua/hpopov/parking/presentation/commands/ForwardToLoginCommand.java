@@ -5,8 +5,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ForwardToLoginCommand extends Command {
+public final class ForwardToLoginCommand extends Command {
 
 	private static ForwardToLoginCommand instance=null;
 	private ForwardToLoginCommand() {
@@ -26,6 +27,11 @@ public class ForwardToLoginCommand extends Command {
 		CommandResult result = CommandResult.FORWARD;
 		result.setArgument(Page.LOG_IN.getPath());
 		return result;
+	}
+
+	@Override
+	protected void clearSessionVariables(HttpSession session) {
+		
 	}
 
 }
