@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="ua.hpopov.parking.presentation.commands.Page" %>
+<%@ page import="ua.hpopov.parking.presentation.commands.CommandType" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -14,26 +16,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script><!--1.12.4-->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/unloginnedHeader.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/login.js"></script>
 	
 <body>
 	<div class="container-fluid">
 		<header class = "row">
 			<div class = "logo_holder col-md-offset-1 col-md-2">
-				<a href = "index.jsp"><img src = "data/images/logo.png" alt = "MyParking"/></a>
+				<a href = "<%=Page.WELCOME.getName() %>"><img src = "data/images/logo.png" alt = "MyParking"/></a>
 			</div>
 			<div class="col-md-offset-4 col-md-2">
-				<button class="btn btn-secondary btn-block" onclick="toRegister()">Register</button>
+				<button class="btn btn-secondary btn-block" onclick="followHref('toRegister')">Register</button>
 			</div>
 			<div class = "main_button col-md-2">
-				<button class="btn btn-primary btn-block" onclick="toLogIn()">Log in</button>
+				<button class="btn btn-primary btn-block" onclick="followHref('toLogin')">Log in</button>
 			</div>
 		</header>
 		<div hidden>
-			<a href="login.jsp" id="toLogin"></a>
-			<a href="registration.jsp" id="toRegister"></a>
-			<a href="forgot_password.jsp" id="toForgotPassword"></a>
+			<a href="<%=Page.LOG_IN.getName() %>" id="toLogin"></a>
+			<a href="<%=Page.REGISTRATION.getName() %>" id="toRegister"></a>
+			<a href="<%=Page.FORGOT_PASSWORD.getName() %>" id="toForgotPassword"></a>
 		</div>
 		<form id="login" class="col-md-offset-3 col-md-6" action="ParkingServlet" method=post>
 			<p class="textCenter textHeader">Log in to Parking System</p>
@@ -51,9 +53,9 @@
   					<p><%= session.getAttribute("loginMessage") %></p>
   				</div>
   			</c:if>
-			<input type="hidden" name="command" value="LOG_IN">
+			<input type="hidden" name="command" value="<%=CommandType.LOG_IN.toString() %>">
 			<div class="formRow formButtonGroup">
-				<input class="btn btn-secondary formButton" type="button" onclick="toForgotPassword()" value="Forgot password?"/>
+				<input class="btn btn-secondary formButton" type="button" onclick="followHref('toForgotPassword')" value="Forgot password?"/>
 				<input class="btn btn-primary formButton" type="submit" value="Log in"/>
 			</div>
 		</form>

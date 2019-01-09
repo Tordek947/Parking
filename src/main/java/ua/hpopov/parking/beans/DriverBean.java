@@ -1,6 +1,6 @@
 package ua.hpopov.parking.beans;
 
-public class DriverBean {
+public class DriverBean implements Bean{
 	private Integer driverId;
 	private Integer userId;
 

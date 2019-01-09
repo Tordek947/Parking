@@ -1,6 +1,6 @@
 package ua.hpopov.parking.beans;
 
-public class BusBean {
+public class BusBean implements Bean{
 	private Integer busId;
 	private Integer busSerial;
 	private String busModel;

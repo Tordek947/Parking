@@ -1,6 +1,6 @@
 package ua.hpopov.parking.beans;
 
-public class UserTypeBean {
+public class UserTypeBean implements Bean{
 	private Integer userTypeId;
 	private String userTypeValue;
 	

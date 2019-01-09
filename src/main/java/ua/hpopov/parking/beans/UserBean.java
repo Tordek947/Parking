@@ -1,9 +1,10 @@
 package ua.hpopov.parking.beans;
 
-public class UserBean {
+public class UserBean implements Bean{
 	private Integer userId;
 	private String name;
 	private String surname;
+	private Boolean needAdminCheck;
 	private Integer userTypeId;
 	
 	
@@ -29,6 +30,14 @@ public class UserBean {
 	
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	public Boolean getNeedAdminCheck() {
+		return needAdminCheck;
+	}
+
+	public void setNeedAdminCheck(Boolean needAdminCheck) {
+		this.needAdminCheck = needAdminCheck;
 	}
 
 	public Integer getUserTypeId() {

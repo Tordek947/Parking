@@ -11,9 +11,9 @@ import javax.servlet.jsp.tagext.TagSupport;
 import ua.hpopov.parking.beans.AssignmentJournalFull;
 import ua.hpopov.parking.beans.UserBean;
 import ua.hpopov.parking.beans.UserTypeBean;
-import ua.hpopov.parking.presentation.beans.AdministratorAssignmentJournalFullPresenter;
-import ua.hpopov.parking.presentation.beans.AssignmentJournalFullPresenter;
-import ua.hpopov.parking.presentation.beans.DriverAssignmentJournalFullPresenter;
+import ua.hpopov.parking.presentation.paginationwrappers.AdministratorAssignmentJournalFullPresenter;
+import ua.hpopov.parking.presentation.paginationwrappers.AssignmentJournalFullPresenter;
+import ua.hpopov.parking.presentation.paginationwrappers.DriverAssignmentJournalFullPresenter;
 import ua.hpopov.parking.services.AssignmentService;
 
 @SuppressWarnings("serial")

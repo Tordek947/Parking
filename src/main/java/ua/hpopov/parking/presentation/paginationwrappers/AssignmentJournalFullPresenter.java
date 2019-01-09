@@ -1,4 +1,4 @@
-package ua.hpopov.parking.presentation.beans;
+package ua.hpopov.parking.presentation.paginationwrappers;
 
 import ua.hpopov.parking.beans.AssignmentJournalFull;
 

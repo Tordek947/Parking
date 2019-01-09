@@ -10,7 +10,3 @@ function forwardLoginPage(){
 	request.open("POST", "ParkingServlet");
 	request.send(formData);
 }
-
-function forwardRegisterPage(){
-	
-}

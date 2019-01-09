@@ -2,7 +2,7 @@ package ua.hpopov.parking.beans;
 
 import java.util.Date;
 
-public class AssignmentJournalFull {
+public class AssignmentJournalFull implements Bean{
 	private Long assignmentId;
 	private Date delegationTime;
 	private Date confirmationTime;

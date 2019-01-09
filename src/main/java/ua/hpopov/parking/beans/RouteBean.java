@@ -1,6 +1,6 @@
 package ua.hpopov.parking.beans;
 
-public class RouteBean {
+public class RouteBean implements Bean{
 	private Integer routeId;
 	private Integer routeStartVertexId;
 	private Integer routeEndVertexId;

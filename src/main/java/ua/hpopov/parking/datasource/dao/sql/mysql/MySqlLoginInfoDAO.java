@@ -113,4 +113,35 @@ public class MySqlLoginInfoDAO extends MySqlAbstractDAO implements LoginInfoDAO 
 		return executeRetrievement(sql, parsingWork);
 	}
 
+	@Override
+	public Integer getUnconfirmedUsersCount() throws DAOOperationException {
+		String sql = Strings.concat(
+				"SELECT COUNT(*) FROM ",FULL_TABLE_NAME,"\r\n",
+				"WHERE ",NEED_ADMIN_CHECK,"=1;"
+				);
+		ParsingWork<Integer> parsingWork = (rs)->{
+			if (rs.next()) {
+				return rs.getInt(0);
+			}
+			return null;
+		};
+		return executeRetrievement(sql, parsingWork);
+	}
+
+	@Override
+	public LoginInfoBean getEdgeUnconfirmedLoginInfo(boolean first) throws DAOOperationException {
+		String sql = Strings.concat(
+				"SELECT * FROM ",FULL_TABLE_NAME,"\r\n",
+				"WHERE ",NEED_ADMIN_CHECK,"=1\r\n",
+				"ORDER BY ",USER_ID," ",(first?"DESC":"ASC")," LIMIT 1;"
+				);
+		ParsingWork<LoginInfoBean> parsingWork = (rs)->{
+			if (rs.next()) {
+				return parseLoginInfoBean(rs);
+			}
+			return null;
+		};
+		return executeRetrievement(sql, parsingWork);
+	}
+
 }

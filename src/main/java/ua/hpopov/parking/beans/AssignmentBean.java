@@ -2,7 +2,7 @@ package ua.hpopov.parking.beans;
 
 import java.util.Date;
 
-public class AssignmentBean {
+public class AssignmentBean implements Bean{
 	private Integer driverId;
 	private Integer delegatorId;
 	private Integer busId;
@@ -56,6 +56,5 @@ public class AssignmentBean {
 	
 	public void setIsConfirmed(Boolean isConfirmed) {
 		this.isConfirmed = isConfirmed;
-	}
-	
+	}	
 }

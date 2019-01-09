@@ -1,16 +1,12 @@
-package ua.hpopov.parking.presentation.beans;
+package ua.hpopov.parking.presentation.paginationwrappers;
 
 import java.util.Iterator;
-import java.util.List;
 
 public class BeanSet<T> {
-	private List<T> list;
-	
 	private Iterator<T> it;
 	
-	public BeanSet(List<T> list) {
-		this.list = list;
-		it = list.iterator();
+	public BeanSet(Iterator<T> it) {
+		this.it = it;
 	}
 	
 	public T getNext() {

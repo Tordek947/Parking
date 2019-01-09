@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.hpopov.parking.beans.UserBean;
+import ua.hpopov.parking.beans.UserProfileWithoutPassword;
+import ua.hpopov.parking.beans.UserTypeBean;
 import ua.hpopov.parking.datasource.Strings;
 import ua.hpopov.parking.datasource.dao.DAOOperationException;
 import ua.hpopov.parking.datasource.dao.ParsingWork;
@@ -156,6 +158,38 @@ public class MySqlUserDAO extends MySqlAbstractDAO implements UserDAO {
 			return userBean;
 		};	
 		return executeRetrievement(sql, work);
+	}
+
+	@Override
+	public List<UserProfileWithoutPassword> getUnconfirmedUsersPage(int fromIndex, boolean forward, int pageSize)
+			throws DAOOperationException {
+		String sql = Strings.concat(
+				"SELECT * FROM ",FULL_TABLE_NAME," AS `user`\r\n",
+				"INNER JOIN ",MySqlLoginInfoDAO.FULL_TABLE_NAME," AS `login_info` \r\n",
+				"ON `user`.",USER_ID,"=`login_info`.",MySqlLoginInfoDAO.USER_ID,"\r\n",
+				"WHERE `login_info`.",MySqlLoginInfoDAO.NEED_ADMIN_CHECK,"=1 AND\r\n",
+				"`user`.",USER_ID,(forward?"<=":">=")+fromIndex,"\r\n",
+				"ORDER BY `user`.",USER_ID," DESC\r\n",
+				"LIMIT "+pageSize,";"
+				);
+		ParsingWork<List<UserProfileWithoutPassword>> parsingWork = (rs)->{
+			List<UserProfileWithoutPassword> result = new ArrayList<>();
+			while (rs.next()) {
+				result.add(parseUserProfileWithoutPassword(rs));
+			}
+			return result;
+		};
+		return executeRetrievement(sql, parsingWork);
+	}
+
+	private UserProfileWithoutPassword parseUserProfileWithoutPassword(ResultSet rs) throws SQLException {
+		UserProfileWithoutPassword result = new UserProfileWithoutPassword();
+		result.setUserBean(parseUserBean(rs));
+		result.setUserTypeBean(UserTypeBean.fromUserTypeId(result.getUserBean().getUserTypeId()));
+		result.setEmail(rs.getString(MySqlLoginInfoDAO.EMAIL));
+		result.setLogin(rs.getString(MySqlLoginInfoDAO.LOGIN));
+		result.setNeedAdminCheck(rs.getBoolean(MySqlLoginInfoDAO.NEED_ADMIN_CHECK));
+		return result;
 	}
 
 }

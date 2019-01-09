@@ -1,6 +1,6 @@
 package ua.hpopov.parking.beans;
 
-public class DriverFull {
+public class DriverFull implements Bean{
 	private Integer driverId;
 	private UserBean userBean;
 	

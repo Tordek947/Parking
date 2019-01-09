@@ -9,4 +9,6 @@ public interface LoginInfoDAO extends DAO {
 			throws DAOOperationException;
 	LoginInfoBean getLoginInfoByEmail(String email) throws DAOOperationException;
 	UpdateResult updateLoginInfoByUserId(LoginInfoBean loginInfo) throws DAOOperationException;
+	LoginInfoBean getEdgeUnconfirmedLoginInfo(boolean first) throws DAOOperationException;
+	Integer getUnconfirmedUsersCount() throws DAOOperationException;
 }

@@ -1,29 +1,36 @@
 package ua.hpopov.parking.beans;
 
-public class LoginInfoBean implements Bean{
-	private Integer userId;
+public class UserProfileWithoutPassword implements Bean{
+	private UserBean userBean;
+	private UserTypeBean userTypeBean;
 	private String email;
 	private String login;
-	private String password;
 	private Boolean needAdminCheck;
 	
+	public UserBean getUserBean() {
+		return userBean;
+	}
 	
-	public Integer getUserId() {
-		return userId;
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
 	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	
+	public UserTypeBean getUserTypeBean() {
+		return userTypeBean;
 	}
-
+	
+	public void setUserTypeBean(UserTypeBean userTypeBean) {
+		this.userTypeBean = userTypeBean;
+	}
+	
 	public String getEmail() {
 		return email;
 	}
-
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	public String getLogin() {
 		return login;
 	}
@@ -32,21 +39,11 @@ public class LoginInfoBean implements Bean{
 		this.login = login;
 	}
 	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public Boolean getNeedAdminCheck() {
 		return needAdminCheck;
 	}
-
+	
 	public void setNeedAdminCheck(Boolean needAdminCheck) {
 		this.needAdminCheck = needAdminCheck;
 	}
-	
-	
 }

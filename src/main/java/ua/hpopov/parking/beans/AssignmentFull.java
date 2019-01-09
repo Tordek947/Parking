@@ -2,7 +2,7 @@ package ua.hpopov.parking.beans;
 
 import java.util.Date;
 
-public class AssignmentFull {
+public class AssignmentFull implements Bean{
 	private DriverFull driverFull;
 	private UserBean delegatorUserBean;
 	private BusBean busBean;

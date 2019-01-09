@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="ua.hpopov.parking.presentation.commands.Page" %>
 <%@ page import="ua.hpopov.parking.presentation.commands.CommandType" %>
+<%@ page import="ua.hpopov.parking.presentation.paginationwrappers.PaginationBeanSet" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib uri = "/WEB-INF/mytaglib.tld" prefix = "mytag" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -9,7 +10,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Administrator</title>
+    <title>New Users</title>
 	<!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -48,23 +49,17 @@
 		</header>
 		<div hidden>
 			<form id="logOut" action="ParkingServlet" method=post accept-charset=utf-8>
-					<input type="hidden" name="command" value="<%=CommandType.LOG_OUT.toString() %>">
+					<input type="hidden" name="command" value="<%=CommandType.LOG_OUT.toString() %>"/>
 					<input type="submit"/>
 			</form>
 		</div>
 		<div class="row content">
-			<div class="vertical col-md-3">
-				<button class="btn btn-default" onclick="followHref('parkingView')">Parking View</button>
-				<button class="btn btn-default" onclick="forwardByForm('newUsers')">New Users</button>
+			<div class="col-md-offset-1 col-md-10">
+				<mytag:pageContent rowClass="row" cellClass="col-6 textCenter"/>
 			</div>
+		</div>
 		<div hidden>
-			<form id="newUsers" action="ParkingServlet" method=get accept-charset=utf-8>
-				<input type="hidden" name="command" value="<%=CommandType.NEW_USERS%>"/>
-				<input type="hidden" name="pageSize" value="10"/>
-				<input type="hidden" name="fromIndex" value="1"/>
-				<input type="hidden" name="forward" value="true"/>
-				<input type="submit"/>
-			</form>
+			
 		</div>
     </div>
 </body>

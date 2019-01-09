@@ -27,4 +27,19 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<name>pageContent</name>
+		<tag-class>ua.hpopov.parking.presentation.tags.PaginationContentTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>rowClass</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cellClass</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

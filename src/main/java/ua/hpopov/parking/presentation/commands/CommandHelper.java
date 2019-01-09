@@ -20,6 +20,8 @@ public class CommandHelper {
 			return ResetPasswordCommand.getInstance();
 		case LOG_OUT:
 			return LogOutCommand.getInstance();
+		case NEW_USERS:
+			return NewUsersCommand.getInstance();
 		}
 		return NoActionCommand.getInstance();
 	}
