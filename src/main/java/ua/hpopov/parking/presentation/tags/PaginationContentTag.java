@@ -14,7 +14,16 @@ public class PaginationContentTag extends TagSupport {
 	
 	private String rowClass="";
 	private String cellClass="";
+	private String pgBeanSetAttrName;
 	private PaginationBeanSet paginationBeanSet;
+
+	public String getPgBeanSetAttrName() {
+		return pgBeanSetAttrName;
+	}
+
+	public void setPgBeanSetAttrName(String pgBeanSetAttrName) {
+		this.pgBeanSetAttrName = pgBeanSetAttrName;
+	}
 
 	public void setRowClass(String rowClass) {
 		this.rowClass = rowClass;
@@ -30,7 +39,7 @@ public class PaginationContentTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
-		setPaginationBeanSet((PaginationBeanSet)pageContext.getRequest().getAttribute("newUsersBeanSet"));
+		setPaginationBeanSet((PaginationBeanSet)pageContext.getRequest().getAttribute(pgBeanSetAttrName));
 		try {
 			//pageContext.getOut().write("<ul class=\""+holderClass+"\">");
 			writeBody();
@@ -42,15 +51,27 @@ public class PaginationContentTag extends TagSupport {
 	}
 
 	private void writeBody() throws IOException {
-		writeRow(paginationBeanSet.getHeader());
+		writeHeader(paginationBeanSet.getHeader());
 		for(BeanWrapper beanWrapper : paginationBeanSet) {
 			writeRow(beanWrapper);
 		}
 	}
 
-	private void writeRow(BeanWrapper beanWrapper) throws IOException {
+	private void writeHeader(BeanWrapper beanWrapper) throws IOException {
 		StringBuilder rowContent = new StringBuilder();
 		rowContent.append("<div class=\""+rowClass+"\">");
+		while(beanWrapper.hasNext()) {
+			rowContent.append("<p class=\""+cellClass+"\">")
+					  .append(beanWrapper.next())
+					  .append("</p>");
+		}
+		rowContent.append("</div>");
+		pageContext.getOut().write(rowContent.toString());
+	}
+	
+	private void writeRow(BeanWrapper beanWrapper) throws IOException {
+		StringBuilder rowContent = new StringBuilder();
+		rowContent.append("<div beanId=\""+beanWrapper.getBeanId()+"\" class=\""+rowClass+"\">");
 		while(beanWrapper.hasNext()) {
 			rowContent.append("<p class=\""+cellClass+"\">")
 					  .append(beanWrapper.next())

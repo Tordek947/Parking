@@ -22,6 +22,10 @@ public class CommandHelper {
 			return LogOutCommand.getInstance();
 		case NEW_USERS:
 			return NewUsersCommand.getInstance();
+		case CONFIRM_NEW_USER:
+			return ConfirmNewUserCommand.getInstance();
+		case DECLINE_NEW_USER:
+			return DeclineNewUserCommand.getInstance();
 		}
 		return NoActionCommand.getInstance();
 	}

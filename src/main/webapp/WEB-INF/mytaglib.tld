@@ -32,6 +32,11 @@
 		<tag-class>ua.hpopov.parking.presentation.tags.PaginationContentTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<name>pgBeanSetAttrName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>rowClass</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

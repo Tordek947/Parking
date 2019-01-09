@@ -20,9 +20,11 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/pagination.js"></script>
+    <script src="js/newUsers.js"></script>
 	
 </head>
-<body>
+<body onload="onNewUsersLoaded()">
 <c:if test="${loginnedUserBean == null}">
 	<jsp:forward page="<%=Page.LOG_IN.getPath() %>"></jsp:forward>
 </c:if>
@@ -55,12 +57,30 @@
 		</div>
 		<div class="row content">
 			<div class="col-md-offset-1 col-md-10">
-				<mytag:pageContent rowClass="row" cellClass="col-6 textCenter"/>
+				<mytag:pageContent pgBeanSetAttrName="newUsersBeanSet" 
+					rowClass="row clkRow clkRowDefault" cellClass="col-6 textCenter"
+				/>
 			</div>
 		</div>
 		<div hidden>
-			
+			<form id="defineNewUser" action="ParkingServlet" method="post" accept-charset=utf-8>
+				<input type="hidden" name="command" value=""/>
+				<input type="hidden" name="choosenBeanId" value=""/>
+				<input type="submit"/>
+			</form>
 		</div>
+		<nav class="navbar navbar-default navbar-fixed-bottom">
+  			<div class="container-fluid">
+    			<div class="row">
+    				<div class="col-md-offset-4 col-md-2">
+						<button class="btn btnDecline btn-block disabled" onclick="declineChoosenUser()">Decline user</button>
+					</div>
+					<div class = "main_button col-md-2">
+						<button class="btn btn-primary btn-block disabled" onclick="confirmChoosenUser()">Confirm user</button>
+					</div>
+    			</div>
+  			</div>
+		</nav>
     </div>
 </body>
 </html>

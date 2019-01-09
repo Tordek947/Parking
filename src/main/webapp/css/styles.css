@@ -228,3 +228,81 @@ form input[type="text"], form input[type="password"]{
 .col-30 {
     width: 100%;
 }
+
+
+
+.clkRow{
+	padding: 6px 12px;
+    padding-right: 12px;
+    padding-left: 12px;
+	margin-bottom: 0;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+	border-radius: 4px;
+}
+
+.clkRow p {
+	margin:0;
+}
+
+.clkRowDefault{	
+    background-color: #d5dde3;
+    border-color: #cfcfcf;
+}
+
+.clkRowDefault:hover{
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+
+}
+
+ .clkRow:focus, .clkRow:hover {
+    color: #333;
+    text-decoration: none;
+
+}
+.btnDecline{
+	color: #1d1a3f;
+	background-color: #f68f8f;
+	border-color: #ff6464;
+}
+
+.disabled.btnDecline{
+	
+}
+
+.btnDecline:hover{
+    color: #1d1a3f;
+	background-color: #e04b4b;
+	border-color: #b31a1a;
+}
+.disabled.btnDecline:hover{
+    color: #1d1a3f;
+	background-color: #f68f8f;
+	border-color: #ff6464;
+}
+
+.choosen{
+	background-color: #bcc3d1;
+	border-color: #5b6186;
+}
+.choosen:hover{
+	background-color: #96a0b6;
+	border-color: #5b6186;
+}

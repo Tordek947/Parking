@@ -14,6 +14,7 @@ import ua.hpopov.parking.datasource.dao.DriverDAO;
 import ua.hpopov.parking.datasource.dao.LoginInfoDAO;
 import ua.hpopov.parking.datasource.dao.Transaction;
 import ua.hpopov.parking.datasource.dao.TransactionWork;
+import ua.hpopov.parking.datasource.dao.UpdateResult;
 import ua.hpopov.parking.datasource.dao.UserDAO;
 
 public class UserService extends AbstractService {
@@ -211,6 +212,59 @@ public class UserService extends AbstractService {
 			return SetPasswordResult.ERROR;
 		}
 		return SetPasswordResult.SUCCESS;
+	}
+
+	public ResolveUserResult confirmUser(Integer choosenUserId) {
+		if (choosenUserId == null || choosenUserId == 0) {
+			return ResolveUserResult.ERROR;
+		}
+		LoginInfoBean[] loginInfoBean = new LoginInfoBean[1];
+		LoginInfoDAO loginInfoDAO = DAOFactories.getFactory().createLoginInfoDAO();
+		UserDAO userDAO = DAOFactories.getFactory().createUserDAO();
+		UpdateResult[] updateResult = new UpdateResult[1];
+		TransactionWork transactionWork = ()->{
+			loginInfoBean[0] = loginInfoDAO.getLoginInfoByUserId(choosenUserId);
+			if (loginInfoBean[0] == null) {
+				return;
+			}
+			loginInfoBean[0].setNeedAdminCheck(false);
+			updateResult[0] = loginInfoDAO.updateLoginInfoByUserId(loginInfoBean[0]);
+		};
+		Transaction transaction = DAOFactories.getFactory().createTransaction(transactionWork);
+		try {
+			transaction.execute();
+		} catch (DAOOperationException e) {
+			handleException(e);
+			return ResolveUserResult.ERROR;
+		}
+		if (loginInfoBean[0] == null || updateResult[0] == UpdateResult.NO_CHANGES_SUCCESSFULLY) {
+			return ResolveUserResult.WAS_ALREADY_RESOLVED;
+		} else if (updateResult[0] == UpdateResult.ERROR) {
+			return ResolveUserResult.ERROR;
+		}
+		String email = loginInfoBean[0].getEmail();
+		UserBean userBean = null;
+		try {
+			userBean = userDAO.getUserById(choosenUserId);
+		} catch (DAOOperationException e) {
+			handleException(e);
+			return ResolveUserResult.ERROR;
+		}
+		String subject = "Registration confirmation in MyParking";
+		String text = Strings.concat(
+				"Hello, ",userBean.getName()," ",userBean.getSurname(),"!\r\n",
+				"You recieve this message because previously you have applied to register in MyParking system.\r\n",
+				"Your application is approved now so you can use MyParking completely.\r\n",
+				"Your password is ",loginInfoBean[0].getPassword(),", please, keep it secret.\r\n",
+				"Do not reply this email, it was generated automatically."
+				);
+		boolean succeed = EmailSender.getInstance().send(subject, text, email);
+		if (succeed) {
+			ResolveUserResult result = ResolveUserResult.SUCCESS;
+			result.setUserBean(userBean);
+			return result;
+		}
+		return ResolveUserResult.ERROR;
 	}
 	
 }
