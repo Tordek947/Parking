@@ -21,7 +21,7 @@ public final class NoActionCommand extends Command {
 	
 	@Override
 	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CommandResult result = CommandResult.STAY;
+		CommandResult result = CommandResult.FORWARD;
 		result.setArgument(Page.ERROR.getPath());
 		return result;
 	}

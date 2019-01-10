@@ -27,6 +27,8 @@
 <c:if test="${loginnedUserBean == null}">
 	<jsp:forward page="<%=Page.LOG_IN.getPath() %>"></jsp:forward>
 </c:if>
+<!-- stub -->
+<jsp:forward page="<%=Page.ERROR.getPath() %>"></jsp:forward>
 <div class="container-fluid">
     	<header class = "row">
 			<div class = "logo_holder col-md-offset-1 col-md-2">
@@ -56,7 +58,7 @@
 		</div>
 		<div class = "page_view col-md-12">
 			<div class = "row">
-				<ul class="nav nav-tabs col-md-offset-1 col-md-3" role="tablist">
+				<ul class="nav nav-tabs col-md-offset-1 col-md-4" role="tablist">
 					<li role="presentation" class="active"><a href="#drivers" aria-controls="drivers" role="tab" data-toggle="tab">Drivers</a></li>
 					<li role="presentation"><a href="#buses" aria-controls="buses" role="tab" data-toggle="tab">Buses</a></li>
 					<li role="presentation"><a href="#routes" aria-controls="routes" role="tab" data-toggle="tab">Routes</a></li>
