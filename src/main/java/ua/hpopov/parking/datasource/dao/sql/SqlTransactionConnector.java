@@ -52,9 +52,15 @@ private static Logger log = LoggerFactory.getLogger(SqlTransactionConnector.clas
 	public void free() {
 		try {
 			connection.setAutoCommit(true);
+			connection.close();
 		} catch (SQLException e) {
-			log.error("Error on setting autoCommit true", e);
+			log.error("Error on closing connection", e);
 		}
 		connection = null;
+	}
+
+	@Override
+	public boolean isNeededToFreeByDAO() {
+		return false;
 	}
 }

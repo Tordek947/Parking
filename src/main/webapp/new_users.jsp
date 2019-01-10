@@ -57,9 +57,28 @@
 		</div>
 		<div class="row content">
 			<div class="col-md-offset-1 col-md-10">
-				<mytag:pageContent pgBeanSetAttrName="newUsersBeanSet" 
-					rowClass="row clkRow clkRowDefault" cellClass="col-6 textCenter"
-				/>
+				<c:if test="${resolveNewUserPopupMsg != null}">
+					<mytag:popupMsg popupMsgName="resolveNewUserPopupMsg"/>
+				</c:if>
+				
+				<c:choose>
+					<c:when test="${newUsersBeanSet != null}">
+        				<mytag:pageContent pgBeanSetAttrName="newUsersBeanSet" 
+							rowClass="row clkRow clkRowDefault" cellClass="col-6 textCenter"
+						/>
+						<mytag:walkPager ariaLabel="New users pages"
+							prevDisabled='<%=!(Boolean)request.getAttribute("hasPrevPage") %>'
+							nextDisabled='<%=!(Boolean)request.getAttribute("hasNextPage") %>'
+						/>
+    				</c:when>  
+    				<c:otherwise>
+        				<c:if test="${newUsersMessage != null}">
+							<div class="serverMsg">
+  								<p><%= request.getAttribute("newUsersMessage") %></p>
+  							</div>
+  						</c:if>
+   					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		<div hidden>
@@ -68,15 +87,22 @@
 				<input type="hidden" name="choosenBeanId" value=""/>
 				<input type="submit"/>
 			</form>
+			<form id="newUserPaging" action="ParkingServlet" method="get" accept-charset=utf-8>
+				<input type="hidden" name="command" value="<%= CommandType.NEW_USERS %>"/>
+				<input type="hidden" name="pageSize" value="10"/>
+				<input type="hidden" name="fromIndex" value=""/>
+				<input type="hidden" name="forward" value=""/>
+				<input type="submit"/>
+			</form>
 		</div>
 		<nav class="navbar navbar-default navbar-fixed-bottom">
   			<div class="container-fluid">
     			<div class="row">
     				<div class="col-md-offset-4 col-md-2">
-						<button class="btn btnDecline btn-block disabled" onclick="declineChoosenUser()">Decline user</button>
+						<button class="btn btnDecline btn-block disabled" command="<%= CommandType.DECLINE_NEW_USER%>">Decline user</button>
 					</div>
 					<div class = "main_button col-md-2">
-						<button class="btn btn-primary btn-block disabled" onclick="confirmChoosenUser()">Confirm user</button>
+						<button class="btn btn-primary btn-block disabled" command="<%= CommandType.CONFIRM_NEW_USER%>">Confirm user</button>
 					</div>
     			</div>
   			</div>

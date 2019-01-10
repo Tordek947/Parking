@@ -61,7 +61,7 @@
 			<form id="newUsers" action="ParkingServlet" method=get accept-charset=utf-8>
 				<input type="hidden" name="command" value="<%=CommandType.NEW_USERS%>"/>
 				<input type="hidden" name="pageSize" value="10"/>
-				<input type="hidden" name="fromIndex" value="1"/>
+				<input type="hidden" name="fromIndex" value="<%= Integer.MAX_VALUE%>"/>
 				<input type="hidden" name="forward" value="true"/>
 				<input type="submit"/>
 			</form>

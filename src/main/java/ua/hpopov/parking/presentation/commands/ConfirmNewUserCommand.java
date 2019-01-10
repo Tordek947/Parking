@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ua.hpopov.parking.services.PaginationService;
 import ua.hpopov.parking.services.PopupMessage;
 import ua.hpopov.parking.services.PopupMessage.PopupMessageType;
 import ua.hpopov.parking.services.ResolveUserResult;
 import ua.hpopov.parking.services.UserService;
+import ua.hpopov.parking.services.WalkPaginationResult;
 
 public class ConfirmNewUserCommand extends Command {
 
@@ -30,7 +32,8 @@ public class ConfirmNewUserCommand extends Command {
 		CommandResult result = CommandResult.FORWARD;
 		result.setArgument(Page.NEW_USERS.getPath());
 		PopupMessage resolveNewUserPopupMsg = new PopupMessage();
-		Integer choosenBeanId = Integer.valueOf(request.getParameter("choosenBeanId"));
+		String str = request.getParameter("choosenBeanId");
+		Integer choosenBeanId = Integer.valueOf(str);
 		ResolveUserResult resolveUserResult = UserService.getInstance().confirmUser(choosenBeanId);
 		switch(resolveUserResult) {
 		case ERROR:
@@ -56,10 +59,31 @@ public class ConfirmNewUserCommand extends Command {
 
 	private void updateNewUsersBeanSet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("pageSize", Integer.valueOf(10).toString());
-		request.setAttribute("fromIndex", Integer.valueOf(1).toString());
-		request.setAttribute("forward", Boolean.valueOf(true).toString());
-		NewUsersCommand.getInstance().execute(request, response);
+		CommandResult result = CommandResult.FORWARD;
+		result.setArgument(Page.ADMIN_MAIN.getPath());
+		
+		Integer pageSize = 10;
+		Integer fromIndex = Integer.MAX_VALUE;
+		Boolean forward = true;
+		WalkPaginationResult walkPaginationResult = PaginationService
+				.getInstance().getNewUsersSimplePage(fromIndex, forward, pageSize);
+		switch(walkPaginationResult.getPaginationResult()) {
+		case NO_RECORDS:
+			request.setAttribute("newUsersMessage", "There are no records yet");
+			result.setArgument(Page.NEW_USERS.getPath());
+			break;
+		case EMPTY_PAGE:
+		case ERROR:
+			result.setArgument(Page.ERROR.getPath());
+			break;
+		case SUCCESS:
+			result.setArgument(Page.NEW_USERS.getPath());
+			request.setAttribute("newUsersBeanSet", walkPaginationResult.getPaginationBeanSet());
+			request.setAttribute("hasPrevPage", walkPaginationResult.isHasPrevPage());
+			request.setAttribute("hasNextPage", walkPaginationResult.isHasNextPage());
+			break;		
+		}
+		//return result;
 	}
 
 	@Override

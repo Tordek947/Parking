@@ -12,11 +12,13 @@
 		<tag-class>ua.hpopov.parking.presentation.tags.RefToMainPageTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
+	
 	<tag>
 		<name>greeting</name>
 		<tag-class>ua.hpopov.parking.presentation.tags.GreetingUserTag</tag-class>
 		<body-content>empty</body-content>
 	</tag>
+	
 	<tag>
 		<name>events</name>
 		<tag-class>ua.hpopov.parking.presentation.tags.RecentEventsTag</tag-class>
@@ -27,6 +29,7 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
+	
 	<tag>
 		<name>pageContent</name>
 		<tag-class>ua.hpopov.parking.presentation.tags.PaginationContentTag</tag-class>
@@ -44,6 +47,37 @@
 		<attribute>
 			<name>cellClass</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>popupMsg</name>
+		<tag-class>ua.hpopov.parking.presentation.tags.PopupMessageTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>popupMsgName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>walkPager</name>
+		<tag-class>ua.hpopov.parking.presentation.tags.WalkPagerTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>ariaLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>prevDisabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>nextDisabled</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

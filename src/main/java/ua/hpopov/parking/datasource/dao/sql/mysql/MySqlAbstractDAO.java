@@ -48,10 +48,17 @@ public class MySqlAbstractDAO implements DAO {
 		resultSet = executeQuery(statement, selectQuery);
 		parsingResult = executeParsing(parsingWork, resultSet);
 		closeResultSet(resultSet);
-		closeStatement(statement);		
+		closeStatement(statement);
+		freeConnector();
 		return parsingResult;
 	}
 	
+	private void freeConnector() {
+		if (connector.isNeededToFreeByDAO()) {
+			connector.free();
+		}
+	}
+
 	protected UpdateResult executeUpdateOperation(String query)
 			throws DAOOperationException {
 		Connection connection = getConnection();
@@ -65,6 +72,7 @@ public class MySqlAbstractDAO implements DAO {
 		UpdateResult updateResult;
 		updateResult = executeUpdateQuery(statement, query);
 		closeStatement(statement);
+		freeConnector();
 		if (updateResult == UpdateResult.ERROR) {
 			throw new DAOOperationException();
 		}
@@ -83,6 +91,7 @@ public class MySqlAbstractDAO implements DAO {
 		}
 		Integer key = executeUpdateQueryRetrievingKey(statement, query);
 		closeStatement(statement);
+		freeConnector();
 		if (key == null) {
 			throw new DAOOperationException();
 		}
@@ -101,6 +110,7 @@ public class MySqlAbstractDAO implements DAO {
 		}
 		Long key = executeUpdateQueryRetrievingLongKey(statement, query);
 		closeStatement(statement);
+		freeConnector();
 		if (key == null) {
 			throw new DAOOperationException();
 		}
@@ -118,6 +128,7 @@ public class MySqlAbstractDAO implements DAO {
 		}
 		boolean successful = execute(statement, query);
 		closeStatement(statement);
+		freeConnector();
 		if (!successful) {
 			throw new DAOOperationException();
 		}
@@ -130,7 +141,6 @@ public class MySqlAbstractDAO implements DAO {
 		}
 		connector = MySqlConnectorProvider.getInstance().makeCommonConnector();
 		Connection conn = connector.getConnection();
-		connector.free();
 		return conn;
 	}
 	

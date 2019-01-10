@@ -35,7 +35,9 @@ public class NewUsersCommand extends Command {
 				.getInstance().getNewUsersSimplePage(fromIndex, forward, pageSize);
 		switch(walkPaginationResult.getPaginationResult()) {
 		case NO_RECORDS:
-			request.getSession().setAttribute("newUsersMessage", "There are no records yet");
+			request.setAttribute("newUsersMessage", "There are no records yet");
+			result.setArgument(Page.NEW_USERS.getPath());
+			clearSessionVariables(request.getSession());
 			break;
 		case EMPTY_PAGE:
 		case ERROR:
@@ -45,6 +47,8 @@ public class NewUsersCommand extends Command {
 			result.setArgument(Page.NEW_USERS.getPath());
 			clearSessionVariables(request.getSession());
 			request.setAttribute("newUsersBeanSet", walkPaginationResult.getPaginationBeanSet());
+			request.setAttribute("hasPrevPage", walkPaginationResult.isHasPrevPage());
+			request.setAttribute("hasNextPage", walkPaginationResult.isHasNextPage());
 			break;		
 		}
 		return result;
@@ -52,7 +56,7 @@ public class NewUsersCommand extends Command {
 
 	@Override
 	protected void clearSessionVariables(HttpSession session) {
-		session.removeAttribute("newUsersMessage");
+		//session.removeAttribute("newUsersMessage");
 	}
 
 }
