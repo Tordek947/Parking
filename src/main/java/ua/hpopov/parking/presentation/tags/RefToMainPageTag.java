@@ -27,7 +27,7 @@ public class RefToMainPageTag extends BodyTagSupport {
 			href = Page.DRIVER_MAIN.getName();
 		}
 		try {
-			pageContext.getOut().write("<a href=\""+href+"\">");
+			pageContext.getOut().write("<a id=\"mainPage\" href=\""+href+"\">");
 		} catch (IOException e) {
 			throw new JspTagException(e.getMessage());
 		}

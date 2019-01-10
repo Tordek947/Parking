@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="ua.hpopov.parking.beans.UserBean" %>
+<%@ page import="ua.hpopov.parking.beans.UserTypeBean" %>
 <%@ page import="ua.hpopov.parking.presentation.commands.Page" %>
 <%@ page import="ua.hpopov.parking.presentation.commands.CommandType" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
@@ -9,7 +11,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Administrator</title>
+    <title>Parking view</title>
 	<!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -52,21 +54,31 @@
 					<input type="submit"/>
 			</form>
 		</div>
-		<div class="row content">
-			<div class="vertical col-md-3">
-				<button class="btn btn-default" onclick="followHref('parkingView')">Parking View</button>
-				<button class="btn btn-default" onclick="forwardByForm('newUsers')">New Users</button>
+		<div class = "page_view col-md-12">
+			<div class = "row">
+				<ul class="nav nav-tabs col-md-offset-1 col-md-3" role="tablist">
+					<li role="presentation" class="active"><a href="#drivers" aria-controls="drivers" role="tab" data-toggle="tab">Drivers</a></li>
+					<li role="presentation"><a href="#buses" aria-controls="buses" role="tab" data-toggle="tab">Buses</a></li>
+					<li role="presentation"><a href="#routes" aria-controls="routes" role="tab" data-toggle="tab">Routes</a></li>
+					<li role="presentation"><a href="#routeVertices" aria-controls="routeVertices" role="tab" data-toggle="tab">Route vertices</a></li>
+				</ul>
+				
+				<p class="col-md-3">
+					<c:if test="${parkingViewAdminMessage != null}">
+						<%= request.getAttribute("parkingViewAdminMessage") %>
+  					</c:if>
+  				</p>
 			</div>
-		</div>
-		<div hidden>
-			<form id="newUsers" action="ParkingServlet" method=get accept-charset=utf-8>
-				<input type="hidden" name="command" value="<%=CommandType.NEW_USERS%>"/>
-				<input type="hidden" name="pageSize" value="10"/>
-				<input type="hidden" name="fromIndex" value="<%= Integer.MAX_VALUE%>"/>
-				<input type="hidden" name="forward" value="true"/>
-				<input type="submit"/>
-			</form>
-			<a id="parkingView" href="<%= Page.PARKING_VIEW.getName() %>"></a>
+			<div class="tab-content row">
+				<div role = "tabpanel" class = "tab-pane col-md-offset-1 col-md-10" id = "drivers">
+				</div>
+				<div role = "tabpanel" class = "tab-pane active col-md-offset-1 col-md-10" id = "buses">
+				</div>
+				<div role = "tabpanel" class= "col-md-offset-1 col-md-10" id = "routes">
+				</div>
+				<div role = "tabpanel" class= "col-md-offset-1 col-md-10" id = "routeVertices">
+				</div>
+			</div>
 		</div>
     </div>
 </body>
